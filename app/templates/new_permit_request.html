@@ -17,4 +17,7 @@
     {{ render_field(permit_form.O3) }}
     {{ permit_form.submit(class="btn btn-outline-info") }}
   </form>
-{% endblock %}
+{% endblock content %}
+{% block scripts %}
+  <script src="{{ url_for('static', filename='js/new_permit.js') }}"></script>
+{% endblock scripts %}
