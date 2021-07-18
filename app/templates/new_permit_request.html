@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}New Permit Request{% endblock title%}
+{% block content%}
+  {% from "__formfieldhelper.html" import render_field %}
+  <form method="POST" action="{{ url_for('.new_permit') }}" novalidate>
+    {{ permit_form.csrf_token }}
+    {{ render_field(permit_form.parish) }}
+    {{ render_field(permit_form.town) }}
+    {{ render_field(permit_form.area_name) }}
+    {{ render_field(permit_form.square_footage) }}
+    {{ render_field(permit_form.AQI) }}
+    {{ render_field(permit_form.PM25) }}
+    {{ render_field(permit_form.PM10) }}
+    {{ render_field(permit_form.CO) }}
+    {{ render_field(permit_form.NO2) }}
+    {{ render_field(permit_form.SO2) }}
+    {{ render_field(permit_form.O3) }}
+    {{ permit_form.submit(class="btn btn-outline-info") }}
+  </form>
+{% endblock %}
