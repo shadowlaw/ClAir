@@ -22,8 +22,10 @@ def create_app(config=Config()):
     bcrypt.init_app(app)
 
     from app.main.views import main
+    from app.main.api import main_api
     from app.blueprints.permit.views import permit
     app.register_blueprint(main)
+    app.register_blueprint(main_api, url_prefix='/api')
     app.register_blueprint(permit, url_prefix="/permit")
 
     return app
