@@ -1,6 +1,12 @@
-from flask import Blueprint, request, render_template
+from app import db
+from flask import Blueprint, request, render_template, current_app, redirect, flash, url_for
+from app.blueprints.permit.model.permit import Permit
+from app.blueprints.permit.model.permit_area_pollutant import PermitAreaPollutant
+from app.constants import CONSTANTS
 from app.model.parish import Parish
 from app.model.town import Town
+from app.model.user import User
+from app.model.pollutant import Pollutant
 from app.blueprints.permit.form.permit_request import PermitRequestForm
 from app.service.town_service import get_towns
 
@@ -15,7 +21,25 @@ def new_permit():
         permit_form.town.choices = get_towns(permit_form.parish.data)
 
     if request.method == "POST" and permit_form.validate():
-        pass
+        permit_header = Permit(area_name=permit_form.area_name.data, town_id=permit_form.town.data, user_id=1)
+        try:
+            db.session.add(permit_header)
+            db.session.flush()
+            db.session.add(PermitAreaPollutant(permit_id=permit_header.id, pollutant_id=permit_form.AQI.id, pollutant_level=float(permit_form.AQI.data)))
+            db.session.add(PermitAreaPollutant(permit_id=permit_header.id, pollutant_id=permit_form.PM25.id, pollutant_level=float(permit_form.PM25.data)))
+            db.session.add(PermitAreaPollutant(permit_id=permit_header.id, pollutant_id=permit_form.PM10.id, pollutant_level=float(permit_form.PM10.data)))
+            db.session.add(PermitAreaPollutant(permit_id=permit_header.id, pollutant_id=permit_form.CO.id, pollutant_level=float(permit_form.CO.data)))
+            db.session.add(PermitAreaPollutant(permit_id=permit_header.id, pollutant_id=permit_form.NO2.id, pollutant_level=float(permit_form.NO2.data)))
+            db.session.add(PermitAreaPollutant(permit_id=permit_header.id, pollutant_id=permit_form.SO2.id, pollutant_level=float(permit_form.SO2.data)))
+            db.session.add(PermitAreaPollutant(permit_id=permit_header.id, pollutant_id=permit_form.O3.id, pollutant_level=float(permit_form.O3.data)))
+            db.session.commit()
+            flash("Permit Request Created", "success")
+            return redirect(url_for("main.home"))
+        except Exception as e:
+            db.session.rollback()
+            current_app.logger.error(e)
+            flash(CONSTANTS["SYSTEM_ERROR_MESSAGE"], "danger")
+
     if request.method == "POST" and permit_form.parish.data != "default":
         permit_form.town.choices = get_towns(permit_form.parish.data)
 
