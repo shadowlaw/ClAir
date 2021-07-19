@@ -1,15 +1,26 @@
 {% macro render_field(field) %}
-  <div class="form-group">
-    {{ field.label }}
+  <div class="form-group row">
+    {{ field.label(class="form-control-label col-4 col-form-label")}}
+    {{ field(**kwargs)|safe }}
+    {% if kwargs['is_pollutant'] %}
+      <span class="col-1">&mu;/m<sup>3</sup></span>
+    {% endif %}
+  </div>
+{% endmacro %}
+
+{% macro render_field_with_errors(field) %}
+  <div class="form-group row">
+    {{ field.label(class="form-control-label col-4 col-form-label")}}
+    {{ field(**kwargs)|safe }}
+    {% if kwargs['is_pollutant'] %}
+      <span class="col-1">&mu;/m<sup>3</sup></span>
+    {% endif %}
     {% if field.errors %}
-      {{ field(class="form-control form-control-inline is-invalid") }}
-      <div class="invalid-feedback">
+      <div class="row pl-3 invalid-feedback">
         {% for error in field.errors %}
-            <span>{{ error }}</span>
+            <span class="col">{{ error }} </span>
         {% endfor %}
-        </div>
-    {% else %}
-      {{ field(class="form-control form-control-inline") }}
+      </div>
     {% endif %}
   </div>
 {% endmacro %}

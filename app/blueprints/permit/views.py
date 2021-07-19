@@ -9,6 +9,8 @@ from app.model.user import User
 from app.model.pollutant import Pollutant
 from app.blueprints.permit.form.permit_request import PermitRequestForm
 from app.service.town_service import get_towns
+from datetime import datetime
+
 
 permit = Blueprint("permit", __name__)
 
@@ -47,4 +49,5 @@ def new_permit():
     permit_form.parish.choices.insert(0, ("default", "Choose a Parish"))
     permit_form.town.choices.insert(0, ("default", "Choose a Town"))
 
-    return render_template("new_permit_request.html", permit_form=permit_form)
+    return render_template("new_permit_request.html", permit_form=permit_form,
+                           current_date=datetime.now().strftime(current_app.config["DISPLAY_DATE_FORMAT"]))
