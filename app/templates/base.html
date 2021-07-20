@@ -2,9 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
+    <title>ClAir - {% block title%}{% endblock title%}</title>
 </head>
 <body>
-
+    <div class="content container">
+        {% include '__flash_messages.html' %}
+        {% block content %}{% endblock content%}
+    </div>
 </body>
+<script src="{{ url_for('static', filename='js/jquery-3.6.0.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/popper.min.js') }}" ></script>
+<script src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js') }}"></script>
+{% block scripts %}{% endblock scripts %}
 </html>
