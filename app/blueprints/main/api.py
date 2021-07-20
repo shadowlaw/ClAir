@@ -1,8 +1,7 @@
 from flask import Blueprint, jsonify
 
-from app.model.parish import Parish
-from app.model.town import Town
-from app.model.town_pollutant import TownPollutant
+from app.blueprints.main.model.parish import Parish
+from app.blueprints.main.model.town import Town
 
 main_api = Blueprint("main_api", __name__)
 

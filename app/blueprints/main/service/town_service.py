@@ -1,4 +1,4 @@
-from app.model.town import Town
+from app.blueprints.main.model.town import Town
 
 
 def get_towns(parish_id):

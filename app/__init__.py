@@ -21,8 +21,8 @@ def create_app(config=Config()):
     csrf.init_app(app)
     bcrypt.init_app(app)
 
-    from app.main.views import main
-    from app.main.api import main_api
+    from app.blueprints.main.views import main
+    from app.blueprints.main.api import main_api
     from app.blueprints.permit.views import permit
     app.register_blueprint(main)
     app.register_blueprint(main_api, url_prefix='/api')

@@ -1,7 +1,7 @@
 from app import db
 from app import create_app
-from app.model.parish import Parish
-from app.model.town import Town
+from app.blueprints.main.model.parish import Parish
+from app.blueprints.main.model.town import Town
 import csv
 
 app = create_app()

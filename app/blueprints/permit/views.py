@@ -3,12 +3,13 @@ from flask import Blueprint, request, render_template, current_app, redirect, fl
 from app.blueprints.permit.model.permit import Permit
 from app.blueprints.permit.model.permit_area_pollutant import PermitAreaPollutant
 from app.constants import CONSTANTS
-from app.model.parish import Parish
-from app.model.town import Town
-from app.model.user import User
-from app.model.pollutant import Pollutant
+from app.blueprints.main.model.parish import Parish
+from app.blueprints.main.model.town import Town
+from app.blueprints.main.model.town_pollutant import TownPollutant
+from app.blueprints.main.model.user import User
+from app.blueprints.main.model.pollutant import Pollutant
 from app.blueprints.permit.form.permit_request import PermitRequestForm
-from app.service.town_service import get_towns
+from app.blueprints.main.service.town_service import get_towns
 from datetime import datetime
 
 
