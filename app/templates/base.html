@@ -6,13 +6,15 @@
     <title>ClAir - {% block title%}{% endblock title%}</title>
 </head>
 <body>
+    {% include 'navbar.html' %}
     <div class="content container">
         {% include '__flash_messages.html' %}
         {% block content %}{% endblock content%}
     </div>
-</body>
+    {% include 'footer.html'%}
 <script src="{{ url_for('static', filename='js/jquery-3.6.0.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/popper.min.js') }}" ></script>
 <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js') }}"></script>
 {% block scripts %}{% endblock scripts %}
+</body>
 </html>
