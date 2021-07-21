@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    
+    <link rel = "stylesheet" href = "{{ url_for('static', filename = 'css/login.css')}}" type = "text/css"/>
+
+
+    <title>ClAir Login</title>
+  </head>
+  <body>
+    <section class = "Form">
+        <div class = "container"> 
+            <div class = "row">
+                <div class="col-lg-3 px-5 pt-5">
+                    <img src= "{{ url_for('static', filename = 'images/Profile.png')}}" class = "avatar">
+                    <h4 class = "font-weight-bold py-3">Welcome Back to ClAir</h4>
+                    <p>Your Pathway to Clean Air</p>
+                    <form method = "POST" action = "{{url_for('main.login')}}">
+                        <div class = "form-row">
+                            <div>
+                                <input type = "username" placeholder="Your Username" class = "form-control my-3">
+                            </div>
+                        </div>
+                        <div class = "form-row">
+                            <div>
+                                <input type = "password" placeholder="Your Password" class = "form-control my-3"> 
+                            </div>
+                        </div>
+                        <div class = "form-row">
+                            <div>
+                                <button type = "submit" class = "btn1">Login</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-lg-9">
+                        <img src= "{{ url_for('static', filename = 'images/Park.png')}}" class = "img-fluid" alt = "">
+                </div>
+            </div>
+        </div> 
+    </section>
+  </body>
+</html>
