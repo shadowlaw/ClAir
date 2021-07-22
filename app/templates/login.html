@@ -21,20 +21,40 @@
                     <img src= "{{ url_for('static', filename = 'images/Profile.png')}}" class = "avatar">
                     <h4 class = "font-weight-bold py-3">Welcome Back to ClAir</h4>
                     <p>Your Pathway to Clean Air</p>
-                    <form method = "POST" action = "{{url_for('main.login')}}">
+                    {% include '__flash_messages.html' %}
+                    <form method = "POST" action = "{{url_for('main.login')}}" novalidate>
+                        {{ form.csrf_token }}
                         <div class = "form-row">
                             <div>
-                                <input type = "username" placeholder="Your Username" class = "form-control my-3">
+                                {% if form.username.errors %}
+                                {{ form.username(placeholder="Your Username", class = "form-control is-invalid my-3")}}
+                                <div class="row pl-3 invalid-feedback">
+                                  {% for error in form.username.errors %}
+                                      <span class="col">{{ error }} </span>
+                                  {% endfor %}
+                                </div>
+                              {% else %}  
+                                {{ form.username(placeholder="Your Username", class = "form-control my-3")}}
+                              {% endif %}
                             </div>
                         </div>
                         <div class = "form-row">
                             <div>
-                                <input type = "password" placeholder="Your Password" class = "form-control my-3"> 
+                                {% if form.password.errors %}
+                                {{ form.password(placeholder="Your Password", class = "form-control is-invalid my-3")}}
+                                <div class="row pl-3 invalid-feedback">
+                                  {% for error in form.password.errors %}
+                                      <span class="col">{{ error }} </span>
+                                  {% endfor %}
+                                </div>
+                                {% else %}  
+                                  {{ form.password(placeholder="Your Password", class = "form-control my-3")}}
+                                {% endif %}
                             </div>
                         </div>
                         <div class = "form-row">
                             <div>
-                                <button type = "submit" class = "btn1">Login</button>
+                                {{ form.submit(class = "btn1")}}
                             </div>
                         </div>
                     </form>
