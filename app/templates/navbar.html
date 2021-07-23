@@ -6,12 +6,12 @@
 
    <div class="collapse navbar-collapse" id="main-nav">
     <div class="navbar-nav mr-auto mt-2 mt-lg-0">
-      {% if url_for(request.endpoint) == url_for('main.home') %}
+      {% if request.endpoint == 'main.home' %}
         <a class="nav-item nav-link active font-weight-bold text-success" href="{{url_for('main.home')}}">Dashboard</a>
       {% else %}
         <a class="nav-item nav-link" href="{{url_for('main.home')}}">Dashboard</a>
       {% endif %}
-      {% if url_for(request.endpoint) == url_for('permit.new_permit') %}
+      {% if request.endpoint == 'permit.new_permit' %}
         <a class="nav-item nav-link active text-success" href="{{url_for('permit.new_permit')}}">Create New Permit Request</a>
       {% else %}
         <a class="nav-item nav-link" href="{{url_for('permit.new_permit')}}">Create New Permit Request</a>
