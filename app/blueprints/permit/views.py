@@ -1,3 +1,5 @@
+from werkzeug.exceptions import abort
+
 from app import db
 from flask import Blueprint, request, render_template, current_app, redirect, flash, url_for
 from app.blueprints.permit.model.permit import Permit
@@ -37,7 +39,7 @@ def new_permit():
             db.session.add(PermitAreaPollutant(permit_id=permit_header.id, pollutant_id=permit_form.O3.id, pollutant_level=float(permit_form.O3.data)))
             db.session.commit()
             flash("Permit Request Created", "success")
-            return redirect(url_for("main.home"))
+            return redirect(url_for("permit.specific_permit", permit_id=permit_header.id))
         except Exception as e:
             db.session.rollback()
             current_app.logger.error(e)
@@ -52,3 +54,15 @@ def new_permit():
 
     return render_template("new_permit_request.html", permit_form=permit_form,
                            current_date=datetime.now().strftime(current_app.config["DISPLAY_DATE_FORMAT"]))
+
+
+@permit.route("/<int:permit_id>", methods=["GET", "POST"])
+def specific_permit(permit_id):
+
+    display_permit = Permit.query.filter_by(id=permit_id).first()
+
+    if display_permit:
+        return render_template('display_permit_request.html', permit=display_permit, requester=display_permit.user,
+                               request_date=str(display_permit.created_on.strftime(current_app.config['DISPLAY_DATE_FORMAT'])))
+
+    abort(404)
