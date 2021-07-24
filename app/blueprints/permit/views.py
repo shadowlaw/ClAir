@@ -24,7 +24,7 @@ def new_permit():
         permit_form.town.choices = get_towns(permit_form.parish.data)
 
     if request.method == "POST" and permit_form.validate():
-        permit_header = Permit(area_name=permit_form.area_name.data, town_id=permit_form.town.data, user_id=1)
+        permit_header = Permit(area_name=permit_form.area_name.data, square_footage=permit_form.square_footage.data, town_id=permit_form.town.data, user_id=1)
         try:
             db.session.add(permit_header)
             db.session.flush()
