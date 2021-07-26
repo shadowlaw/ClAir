@@ -2,15 +2,15 @@ from werkzeug.exceptions import abort
 
 from app import db
 from flask import Blueprint, request, render_template, current_app, redirect, flash, url_for
-from app.blueprints.permit.model.planning_application import PlanningApplication
-from app.blueprints.permit.model.planning_application_area_pollutant import PlanningApplicationAreaPollutant
+from app.blueprints.planning_application.model.planning_application import PlanningApplication
+from app.blueprints.planning_application.model.planning_application_area_pollutant import PlanningApplicationAreaPollutant
 from app.constants import CONSTANTS
 from app.blueprints.main.model.parish import Parish
 from app.blueprints.main.model.town import Town
 from app.blueprints.main.model.town_pollutant import TownPollutant
 from app.blueprints.main.model.user import User
 from app.blueprints.main.model.pollutant import Pollutant
-from app.blueprints.permit.form.planning_application import PlanningApplicationForm
+from app.blueprints.planning_application.form.planning_application import PlanningApplicationForm
 from app.blueprints.main.service.town_service import get_towns
 from datetime import datetime
 from flask_login import login_required
