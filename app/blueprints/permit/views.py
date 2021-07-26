@@ -13,12 +13,14 @@ from app.blueprints.main.model.pollutant import Pollutant
 from app.blueprints.permit.form.permit_request import PermitRequestForm
 from app.blueprints.main.service.town_service import get_towns
 from datetime import datetime
+from flask_login import login_required
 
 
 permit = Blueprint("permit", __name__)
 
 
 @permit.route("new", methods=["GET", "POST"])
+@login_required
 def new_permit():
     permit_form = PermitRequestForm(request.form)
     permit_form.parish.choices = [(parish.id, parish.name) for parish in Parish.query.all()]

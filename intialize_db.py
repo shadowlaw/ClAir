@@ -4,6 +4,8 @@ from app.blueprints.main.model.parish import Parish
 from app.blueprints.main.model.town import Town
 import csv
 
+from app.blueprints.main.model.user import User
+
 app = create_app()
 
 
@@ -13,6 +15,7 @@ def read_parish_data():
 
 
 def load_parish_town_data(town_data):
+    print("Populating Parish and Towns")
     parishes_seen = []
     towns_seen = []
     with app.app_context():
@@ -33,8 +36,18 @@ def load_parish_town_data(town_data):
                 towns_seen.append(town_name)
 
             db.session.commit()
+    print("Done")
+
+
+def add_default_user():
+    print("Creating default user")
+    with app.app_context():
+        db.session.add(User(username='default', password='pbkdf2:sha256:150000$GjuQgVkr$003437af92ded1a1d99ebcc56bf20d9bc4dd03e471380aa73c2a7a15a9321194'))
+        db.session.commit()
+    print("Done")
 
 
 if __name__ == "__main__":
     data = read_parish_data()
     load_parish_town_data(data)
+    add_default_user()
