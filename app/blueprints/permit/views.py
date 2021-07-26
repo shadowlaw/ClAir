@@ -54,7 +54,7 @@ def new_application():
     planning_application_form.parish.choices.insert(0, ("default", "Choose a Parish"))
     planning_application_form.town.choices.insert(0, ("default", "Choose a Town"))
 
-    return render_template("new_permit_request.html", permit_form=planning_application_form,
+    return render_template("new_planning_application.html", application_form=planning_application_form,
                            current_date=datetime.now().strftime(current_app.config["DISPLAY_DATE_FORMAT"]))
 
 
@@ -64,7 +64,7 @@ def specific_application(application_id):
     planning_application = PlanningApplication.query.filter_by(id=application_id).first()
 
     if planning_application:
-        return render_template('display_permit_request.html', permit=planning_application, requester=planning_application.user,
+        return render_template('planning_application.html', application=planning_application, requester=planning_application.user,
                                request_date=str(planning_application.created_on.strftime(current_app.config['DISPLAY_DATE_FORMAT'])))
 
     abort(404)

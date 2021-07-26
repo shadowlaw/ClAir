@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
-{% block title %}Permit Request - {{permit.area_name}}{% endblock title%}
+{% block title %}Planning Application - {{application.area_name}}{% endblock title%}
 {% block links %}
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/permit.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/planning_application.css') }}">
 {% endblock links %}
 {% block content%}
 <div class="row justify-content-center align-items-center h-100">
@@ -9,7 +9,7 @@
     <div class="row">
       <div class="col-12">
         <div class="row align-items-end">
-            <span class="col-7 h3">BUILDING PERMIT REQUEST</span>
+            <span class="col-7 h3">Planning Application</span>
             <span class="col-3 h5">Requester: {{requester.id}}</span>
             <span class="col-2 h5">Date: {{request_date}}</span>
         </div>
@@ -31,7 +31,7 @@
                   <span class="col-4">Parish</span>
                   <span class="col-5 bg-white" style="height: 2rem;">
                     <div class="row justify-content-center align-items-center" style="height:100%;">
-                        <span>{{permit.town.parish.name}}</span>
+                        <span>{{application.town.parish.name}}</span>
                     </div>
                   </span>
                 </div>
@@ -39,7 +39,7 @@
                   <span class="col-4">Town</span>
                   <span class="col-5 bg-white" style="height: 2rem;">
                     <div class="row justify-content-center align-items-center" style="height:100%;">
-                      <span>{{permit.town.name}}</span>
+                      <span>{{application.town.name}}</span>
                     </div>
                   </span>
                 </div>
@@ -47,7 +47,7 @@
                   <span class="col-4">Area Name</span>
                   <span class="col-5 bg-white" style="height: 2rem;">
                     <div class="row justify-content-center align-items-center" style="height:100%;">
-                      <span>{{permit.area_name}}</span>
+                      <span>{{application.area_name}}</span>
                     </div>
                   </span>
                 </div>
@@ -55,7 +55,7 @@
                   <span class="col-4">Square Footage</span>
                   <span class="col-5 bg-white" style="height: 2rem;">
                     <div class="row justify-content-center align-items-center" style="height:100%;">
-                      <span>{{permit.square_footage | round(2)}}</span>
+                      <span>{{application.square_footage | round(2)}}</span>
                     </div>
                   </span>
                 </div>
@@ -74,7 +74,7 @@
             </div>
             <div class="row">
               <div class="col-6">
-                {% for pollutant in permit.pollutants[:4] %}
+                {% for pollutant in application.pollutants[:4] %}
                   <div class="row justify-content-center form-group">
                     <span class="col-4">{{pollutant.pollutant_id}}</span>
                     <span class="col-7 bg-white" style="height: 2rem;">
@@ -89,7 +89,7 @@
                 {% endfor %}
               </div>
               <div class="col-6">
-                {% for pollutant in permit.pollutants[4:] %}
+                {% for pollutant in application.pollutants[4:] %}
                   <div class="row justify-content-center form-group">
                     <span class="col-4">{{pollutant.pollutant_id}}</span>
                     <span class="col-7 bg-white" style="height: 2rem;">

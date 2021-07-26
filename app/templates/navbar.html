@@ -12,9 +12,9 @@
         <a class="nav-item nav-link" href="{{url_for('main.home')}}">Dashboard</a>
       {% endif %}
       {% if request.endpoint == 'planning_application_views.new_application' %}
-        <a class="nav-item nav-link active font-weight-bold text-success" href="{{url_for('planning_application_views.new_application')}}">Create New Permit Request</a>
+        <a class="nav-item nav-link active font-weight-bold text-success" href="{{url_for('planning_application_views.new_application')}}">New Planning Application</a>
       {% else %}
-        <a class="nav-item nav-link" href="{{url_for('planning_application_views.new_application')}}">Create New Permit Request</a>
+        <a class="nav-item nav-link" href="{{url_for('planning_application_views.new_application')}}">New Planning Application</a>
       {% endif %}
     </div>
     <a class="nav-item nav-link" href="{{url_for('main.logout')}}">Logout</a>
