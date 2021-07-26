@@ -6,3 +6,4 @@ class Town(db.Model):
     parish_id = db.Column(db.String(100), db.ForeignKey("parish.id"), primary_key=True)
     name = db.Column(db.String(255), nullable=False)
     pollutants = db.relationship("TownPollutant", backref="town", lazy=True)
+    permits = db.relationship("Permit", backref="town", lazy=True)

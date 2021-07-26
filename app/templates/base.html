@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
     <title>ClAir - {% block title%}{% endblock title%}</title>
+    {% block links %}{% endblock links %}
 </head>
-<body>
+<body style="height: 80vh !important">
     {% include 'navbar.html' %}
-    <div class="content container">
+    <div class="container-sm h-100">
         {% include '__flash_messages.html' %}
         {% block content %}{% endblock content%}
     </div>
