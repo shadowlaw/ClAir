@@ -5,7 +5,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(255))
     password = db.Column(db.String(255))
-    permits_created = db.relationship("Permit", backref="user", lazy=True)
+    permits_created = db.relationship("PlanningApplication", backref="user", lazy=True)
 
     def is_authenticated(self):
         return True

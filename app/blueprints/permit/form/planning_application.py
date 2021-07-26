@@ -4,7 +4,7 @@ from wtforms.validators import InputRequired, DataRequired, Regexp, NumberRange
 from app.constants import CONSTANTS
 
 
-class PermitRequestForm(FlaskForm):
+class PlanningApplicationForm(FlaskForm):
     parish = SelectField("Parish", validators=[InputRequired()])
     town = SelectField("Town", choices=[], validators=[InputRequired()])
     area_name = StringField("Area Name", validators=[InputRequired(), Regexp(r'^[^!@#$%^&*()+\-=\[\]{};\':"\\|,.<>\/?]*$')])
