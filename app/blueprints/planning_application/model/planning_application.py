@@ -2,7 +2,7 @@ from app import db
 from datetime import datetime
 
 
-class Permit(db.Model):
+class PlanningApplication(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     area_name = db.Column(db.String(100), nullable=False)
@@ -10,4 +10,4 @@ class Permit(db.Model):
     town_id = db.Column(db.String(100), db.ForeignKey("town.id"), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     created_on = db.Column(db.DateTime, nullable=True, default=datetime.now)
-    pollutants = db.relationship("PermitAreaPollutant", backref="permit", lazy=True)
+    pollutants = db.relationship("PlanningApplicationAreaPollutant", backref="planning_application", lazy=True)

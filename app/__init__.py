@@ -24,9 +24,9 @@ def create_app(config=Config()):
 
     from app.blueprints.main.views import main
     from app.blueprints.main.api import main_api
-    from app.blueprints.permit.views import permit
+    from app.blueprints.planning_application.views import planning_application_views
     app.register_blueprint(main)
     app.register_blueprint(main_api, url_prefix='/api')
-    app.register_blueprint(permit, url_prefix="/permit")
+    app.register_blueprint(planning_application_views, url_prefix="/planning_application")
 
     return app
