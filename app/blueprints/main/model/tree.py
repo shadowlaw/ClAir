@@ -10,3 +10,4 @@ class Tree(db.Model):
     maturity_size = db.Column(db.Numeric(precision=2), nullable=False)
     space_required = db.Column(db.Numeric(precision=2), nullable=False)
     type = db.relationship('TreeType', backref='trees', lazy=True)
+    report_details = db.relationship("ReportDetail", backref="tree", lazy=True)

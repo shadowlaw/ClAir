@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
-    <title>ClAir - {% block title%}{% endblock title%}</title>
     {% block links %}{% endblock links %}
+    <title>ClAir - {% block title%}{% endblock title%}</title>
 </head>
 <body style="height: 80vh !important">
     {% include 'navbar.html' %}

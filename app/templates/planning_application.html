@@ -76,7 +76,7 @@
               <div class="col-6">
                 {% for pollutant in application.pollutants[:4] %}
                   <div class="row justify-content-center form-group">
-                    <span class="col-4">{{pollutant.pollutant_id}}</span>
+                    <span class="col-4">{{pollutant.pollutant.name.split()[0] }}<sub>{{pollutant.pollutant.name.split()[1]}}</sub></span>
                     <span class="col-7 bg-white" style="height: 2rem;">
                       <div class="row justify-content-center align-items-center" style="height:100%;">
                         {{pollutant.pollutant_level | round(2)}}
@@ -91,7 +91,7 @@
               <div class="col-6">
                 {% for pollutant in application.pollutants[4:] %}
                   <div class="row justify-content-center form-group">
-                    <span class="col-4">{{pollutant.pollutant_id}}</span>
+                    <span class="col-4">{{pollutant.pollutant.name.split()[0] }}<sub>{{pollutant.pollutant.name.split()[1]}}</sub></span>
                     <span class="col-7 bg-white" style="height: 2rem;">
                       <div class="row justify-content-center align-items-center" style="height:100%;">
                         {{pollutant.pollutant_level | round(2)}} <span>&mu;/m<sup>3</sup></span>

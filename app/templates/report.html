@@ -1,0 +1,79 @@
+{% extends 'base.html'%}
+{% block links %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/report.css') }}">
+{% endblock links %}
+{% block title %}Planning Application Report - {{report.planning_application.area_name}}{% endblock title%}
+{% block content%}
+<div class="row justify-content-center h-100">
+      <div class="content col-12">
+        <div class="row">
+          <div class="col-12">
+              <div class="row align-items-end">
+                  <span class="col-7 h3">GREEN SPACE COMPOSITION REPORT</span>
+                  <span class="col-3 h5">Requester: {{report.planning_application.user.username}}</span>
+                  <span class="col-2 h5">Date: {{created_on}}</span>
+              </div>
+              <hr class="mt-1"/>
+              <div class="row">
+                  <div class="col-lg-4">
+                      <div class="row justify-content-center form-group">
+                          <span class="col-4">Area Name</span>
+                          <span class="col-5">{{report.planning_application.area_name}}</span>
+                      </div>
+                      <div class="row justify-content-center form-group">
+                          <span class="col-4">Town Name</span>
+                          <span class="col-5">{{report.planning_application.town.name}}</span>
+                      </div>
+                      <div class="row justify-content-center form-group">
+                          <span class="col-4">Parish Name</span>
+                          <span class="col-5">{{report.planning_application.town.parish.name}}</span>
+                      </div>
+                      <div class="row justify-content-center form-group">
+                          <span class="col-4">Square Footage</span>
+                          <span class="col-5">{{report.planning_application.square_footage | round(2)}} sq. ft.</span>
+                      </div>
+
+                      {% for pollutant in report.planning_application.pollutants %}
+                        <div class="row justify-content-center form-group">
+                            <span class="col-4">{{pollutant.pollutant.name.split()[0] }}<sub>{{pollutant.pollutant.name.split()[1]}}</sub></span>
+                            <span class="col-5" style="height: 2rem;">
+                              {{pollutant.pollutant_level | round(2)}}
+                                {% if pollutant.pollutant_id != 'AQI'%}
+                                  <span>&mu;/m<sup>3</sup></span>
+                                {% endif %}
+                            </span>
+                        </div>
+                        {% endfor %}
+                  </div>
+                  <div class="col-lg-8 scrollable">
+                      <table class="table borderless text-center">
+                          <thead>
+                            <tr>
+                              <th scope="col"></th>
+                              <th scope="col">No. of Trees</th>
+                              <th scope="col">Name</th>
+                              <th scope="col">Tree Type</th>
+                              <th scope="col">Targeted Pollutant</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {% for report_detail in report.report_details %}
+                            <tr>
+                              <th scope="row">
+                                  <img src="{{ url_for('static', filename='images/default_tree.jpeg') }}" style="width: 8em; height: 8em;"/>
+                              </th>
+                              <td class="align-middle">{{ report_detail.quantity }}</td>
+                              <td class="align-middle">{{ report_detail.tree.name }}</td>
+                              <td class="align-middle">{{ report_detail.tree.type.name }}</td>
+                              <td class="align-middle">{{report_detail.pollutant.name.split()[0] }}<sub>{{report_detail.pollutant.name.split()[1]}}</sub></td>
+                            </tr>
+                            {% endfor %}
+                          </tbody>
+                        </table>
+                  </div>
+              </div>
+          </div>
+        </div>
+    </div>
+</div>
+{% endblock content%}
