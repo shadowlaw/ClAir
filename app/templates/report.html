@@ -16,21 +16,48 @@
               <hr class="mt-1"/>
               <div class="row">
                   <div class="col-lg-4">
+                      <div class="row mt-2 mb-4" style="transform: skewX(-10deg); height: 3em;">
+                        <span class="col-11 bg-success text-white h4 text-center">
+                          <span class="row h-100 align-items-center">
+                            <span class="col-12">
+                              LOCATION DETAILS
+                            </span>
+                          </span>
+                        </span>
+                      </div>
                       <div class="row justify-content-center form-group">
                           <span class="col-4">Area Name</span>
                           <span class="col-5">{{report.planning_application.area_name}}</span>
-                      </div>
-                      <div class="row justify-content-center form-group">
-                          <span class="col-4">Town Name</span>
-                          <span class="col-5">{{report.planning_application.town.name}}</span>
                       </div>
                       <div class="row justify-content-center form-group">
                           <span class="col-4">Parish Name</span>
                           <span class="col-5">{{report.planning_application.town.parish.name}}</span>
                       </div>
                       <div class="row justify-content-center form-group">
-                          <span class="col-4">Square Footage</span>
+                          <span class="col-4">Town Name</span>
+                          <span class="col-5">{{report.planning_application.town.name}}</span>
+                      </div>
+                      <div class="row justify-content-center form-group">
+                          <span class="col-4">Town Size</span>
+                          <span class="col-5">{{report.planning_application.town.size | round(2)}} sq. ft.</span>
+                      </div>
+                      <div class="row justify-content-center form-group">
+                          <span class="col-4">Area Size</span>
                           <span class="col-5">{{report.planning_application.square_footage | round(2)}} sq. ft.</span>
+                      </div>
+                      <div class="row justify-content-center form-group">
+                          <span class="col-4">Targeted Area</span>
+                          <span class="col-5">{{((report.planning_application.square_footage/report.planning_application.town.size)*100) | round(2)}}%</span>
+                      </div>
+
+                      <div class="row mt-2 mb-4" style="transform: skewX(-10deg); height: 3em;">
+                        <span class="col-11 bg-success text-white h4 text-center">
+                          <span class="row h-100 align-items-center">
+                            <span class="col-12">
+                              AIR QUALITY DETAILS
+                            </span>
+                          </span>
+                        </span>
                       </div>
 
                       {% for pollutant in report.planning_application.pollutants %}

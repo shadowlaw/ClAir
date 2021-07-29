@@ -31,7 +31,7 @@ def load_parish_town_data(town_data):
                 parishes_seen.append(parish_name)
 
             if town_name not in towns_seen:
-                town = Town(id=town_id, parish_id=parish_id, name=town_name)
+                town = Town(id=town_id, parish_id=parish_id, name=town_name, size=row['sq. ft.'])
                 db.session.add(town)
                 towns_seen.append(town_name)
 
