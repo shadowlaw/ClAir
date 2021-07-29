@@ -79,8 +79,8 @@
                               <th scope="col"></th>
                               <th scope="col">No. of Trees</th>
                               <th scope="col">Name</th>
-                              <th scope="col">Tree Type</th>
                               <th scope="col">Targeted Pollutant</th>
+                              <th scope="col">Tree Efficacy</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -91,8 +91,8 @@
                               </th>
                               <td class="align-middle">{{ report_detail.quantity }}</td>
                               <td class="align-middle">{{ report_detail.tree.name }}</td>
-                              <td class="align-middle">{{ report_detail.tree.type.name }}</td>
-                              <td class="align-middle">{{report_detail.pollutant.name.split()[0] }}<sub>{{report_detail.pollutant.name.split()[1]}}</sub></td>
+                              <td class="align-middle">{{report_detail.pollutant.name.split()[0] }}<sub>{{report_detail.pollutant.name.split()[1]}}</sub></td
+                              <td class="align-middle">{{ report_detail.targeted_pollutant_tree_efficacy.effectiveness | round }}</td>
                             </tr>
                             {% endfor %}
                           </tbody>
