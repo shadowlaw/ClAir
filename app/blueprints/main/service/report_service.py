@@ -3,8 +3,6 @@ from app.blueprints.main.model.pollutant import Pollutant
 from app.blueprints.main.model.tree_efficacy import TreeEfficacy
 from app.blueprints.main.model.town_pollutant import TownPollutant
 
-### Knapsack Problem
-
 def getSafeLevel(pollutant_id):
     pollutant = Pollutant.query.filter_by(id = pollutant_id).first()
     return pollutant.safe_level
@@ -26,18 +24,47 @@ def get_recommendations(square_footage,pollutants):
 
     trees = getTrees(pollutants)
 
+    # To keep track of how much pollutant levels exceed safe levels
     p = {}
     for pollutant in pollutants:
         p[pollutant.pollutant_id] = pollutant.pollutant_level - getSafeLevel(pollutant.pollutant_id)
 
+    # All the pollutants present below safe levels
     def allSafe():
         for k in p.keys():
-            if p[k][0] > p[k][1]:
+            if p[k] >= 0:
                 return False
         return True
 
+    # Return tree with the best efficacy for any pollutant
+    def getBestTree(pollutant_id):
+        e = TreeEfficacy.query.filter_by(pollutant_id=pollutant_id).all()
+        chosen = max(e, key=lambda x: x.effectiveness)
+        return Tree.query.filter_by(id=chosen.tree_id).first()
+
     while square_footage_left > 0 or not allSafe():
-        pass
+        for pollutant in pollutants:
+            best_tree = getBestTree(pollutant.pollutant_id)
+            square_footage_left -= best_tree.space_required
+
+            # If the tree found exceeds the space requirements STOP
+            if square_footage_left < 0:
+                square_footage_left = 0
+                break
+
+            # Get all the pollutants the tree is effective against
+            all_tree_pollutants = TreeEfficacy.query.filter_by(tree_id=best_tree.tree_id).all()
+
+            # Reduce the pollutant levels in the dict
+            for x in all_tree_pollutants:
+                if x.pollutant_id in p.keys():
+                    p[x.pollutant_id] -= x.effectiveness
+
+            if best_tree.tree_id in results:
+                results[best_tree.tree_id] += 1
+            else:
+                results[best_tree.tree_id] = 1
+    return results
 
 def generate_report():
     pass
