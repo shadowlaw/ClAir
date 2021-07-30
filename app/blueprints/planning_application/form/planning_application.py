@@ -8,6 +8,12 @@ from flask import Markup
 class PlanningApplicationForm(FlaskForm):
     parish = SelectField("Parish", validators=[InputRequired()])
     town = SelectField("Town", choices=[], validators=[InputRequired()])
+    folio_number = StringField("Folio Number",
+                               validators=[
+                                    InputRequired(),
+                                    DataRequired(message=CONSTANTS["NUMBER_REQUIRED_VALIDATOR_MESSAGE"]),
+                                    Regexp(r'^[0-9]{3}$', message='Please enter a valid Folio Number. 001-999')
+                               ])
     area_name = StringField("Area Name", validators=[InputRequired(), Regexp(r'^[^!@#$%^&*()+\-=\[\]{};\':"\\|,.<>\/?]*$')])
     square_footage = DecimalField("Square Footage", validators=[InputRequired(), DataRequired(message=CONSTANTS["NUMBER_REQUIRED_VALIDATOR_MESSAGE"])])
     AQI = DecimalField("AQI", validators=[InputRequired(), DataRequired(message=CONSTANTS["NUMBER_REQUIRED_VALIDATOR_MESSAGE"]),

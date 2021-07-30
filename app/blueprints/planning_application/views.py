@@ -13,7 +13,7 @@ from app.blueprints.main.model.pollutant import Pollutant
 from app.blueprints.planning_application.form.planning_application import PlanningApplicationForm
 from app.blueprints.main.service.town_service import get_towns
 from datetime import datetime
-from flask_login import login_required
+from flask_login import login_required, current_user
 
 
 planning_application_views = Blueprint("planning_application_views", __name__)
@@ -28,7 +28,15 @@ def new_application():
         planning_application_form.town.choices = get_towns(planning_application_form.parish.data)
 
     if request.method == "POST" and planning_application_form.validate():
-        application_header = PlanningApplication(area_name=planning_application_form.area_name.data, square_footage=planning_application_form.square_footage.data, town_id=planning_application_form.town.data, user_id=1)
+
+        application_header = PlanningApplication(
+            folio_number=int(planning_application_form.folio_number.data),
+            area_name=planning_application_form.area_name.data,
+            square_footage=planning_application_form.square_footage.data,
+            town_id=planning_application_form.town.data,
+            user_id=current_user.id
+        )
+
         try:
             db.session.add(application_header)
             db.session.flush()
