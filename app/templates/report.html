@@ -14,63 +14,84 @@
                   <span class="col-2 h5">Date: {{created_on}}</span>
               </div>
               <hr class="mt-1"/>
-              <div class="row">
+              <div class="row align-items-center">
                   <div class="col-lg-4">
-                      <div class="row mt-2 mb-4" style="transform: skewX(-10deg); height: 3em;">
-                        <span class="col-11 bg-success text-white h4 text-center">
-                          <span class="row h-100 align-items-center">
-                            <span class="col-12">
-                              LOCATION DETAILS
-                            </span>
-                          </span>
-                        </span>
+                      <div class="row mb-5">
+                          <div class="col-12"/>
+                              <div class="row mt-2 mb-3" style="transform: skewX(-10deg); height: 3em;">
+                                <span class="col-11 bg-success text-white h4 text-center">
+                                  <span class="row h-100 align-items-center">
+                                    <span class="col-12">
+                                      LOCATION DETAILS
+                                    </span>
+                                  </span>
+                                </span>
+                              </div>
+                              <div class="row justify-content-center">
+                                  <span class="col-4">Area Name</span>
+                                  <span class="col-5">{{report.planning_application.area_name}}</span>
+                              </div>
+                              <div class="row justify-content-center">
+                                  <span class="col-4">Parish Name</span>
+                                  <span class="col-5">{{report.planning_application.town.parish.name}}</span>
+                              </div>
+                              <div class="row justify-content-center">
+                                  <span class="col-4">Town Name</span>
+                                  <span class="col-5">{{report.planning_application.town.name}}</span>
+                              </div>
+                              <div class="row justify-content-center">
+                                  <span class="col-4">Town Size</span>
+                                  <span class="col-5">{{report.planning_application.town.size | round(2)}} sq. ft.</span>
+                              </div>
+                              <div class="row justify-content-center">
+                                  <span class="col-4">Area Size</span>
+                                  <span class="col-5">{{report.planning_application.square_footage | round(2)}} sq. ft.</span>
+                              </div>
+                              <div class="row justify-content-center">
+                                  <span class="col-4">Targeted Area</span>
+                                  <span class="col-5">{{((report.planning_application.square_footage/report.planning_application.town.size)*100) | round(2)}}%</span>
+                              </div>
+                          </div>
                       </div>
-                      <div class="row justify-content-center form-group">
-                          <span class="col-4">Area Name</span>
-                          <span class="col-5">{{report.planning_application.area_name}}</span>
-                      </div>
-                      <div class="row justify-content-center form-group">
-                          <span class="col-4">Parish Name</span>
-                          <span class="col-5">{{report.planning_application.town.parish.name}}</span>
-                      </div>
-                      <div class="row justify-content-center form-group">
-                          <span class="col-4">Town Name</span>
-                          <span class="col-5">{{report.planning_application.town.name}}</span>
-                      </div>
-                      <div class="row justify-content-center form-group">
-                          <span class="col-4">Town Size</span>
-                          <span class="col-5">{{report.planning_application.town.size | round(2)}} sq. ft.</span>
-                      </div>
-                      <div class="row justify-content-center form-group">
-                          <span class="col-4">Area Size</span>
-                          <span class="col-5">{{report.planning_application.square_footage | round(2)}} sq. ft.</span>
-                      </div>
-                      <div class="row justify-content-center form-group">
-                          <span class="col-4">Targeted Area</span>
-                          <span class="col-5">{{((report.planning_application.square_footage/report.planning_application.town.size)*100) | round(2)}}%</span>
-                      </div>
+                      <div class="row">
+                          <div class="col-12">
+                              <div class="row mb-3" style="transform: skewX(-10deg); height: 3em;">
+                                <span class="col-11 bg-success text-white h4 text-center">
+                                  <span class="row h-100 align-items-center">
+                                    <span class="col-12">
+                                      AIR QUALITY DETAILS
+                                    </span>
+                                  </span>
+                                </span>
+                              </div>
 
-                      <div class="row mt-2 mb-4" style="transform: skewX(-10deg); height: 3em;">
-                        <span class="col-11 bg-success text-white h4 text-center">
-                          <span class="row h-100 align-items-center">
-                            <span class="col-12">
-                              AIR QUALITY DETAILS
-                            </span>
-                          </span>
-                        </span>
+                              {% for pollutant in report.planning_application.pollutants %}
+                                <div class="row justify-content-center">
+                                    <span class="col-3">{{pollutant.pollutant.name.split()[0] }}<sub>{{pollutant.pollutant.name.split()[1]}}</sub></span>
+                                    <span class="col-3" style="height: 2rem;">
+                                      {{pollutant.pollutant_level | round(2)}}
+                                        {% if pollutant.pollutant_id != 'AQI'%}
+                                          <span>&mu;/m<sup>3</sup></span>
+                                        {% endif %}
+                                    </span>
+                                    {% if pollutant.pollutant_id == 'AQI'%}
+                                        <span class="col-6">Moderate</span>
+                                    {% else %}
+                                        <span class="col-6">
+                                            {% if pollutant.pollutant_id != 'AQI' and pollutant.pollutant.safe_level - pollutant.pollutant_level < 0 %}
+                                                {{ ((pollutant.pollutant.safe_level - pollutant.pollutant_level)* -1) | round(2) }}
+                                                <span>&mu;/m<sup>3</sup></span> <span class="text-danger">Over Safe Limit</span>
+                                            {% else %}
+                                                {{ (pollutant.pollutant.safe_level - pollutant.pollutant_level) | round(2) }}
+                                                <span>&mu;/m<sup>3</sup></span>
+                                                <span class="text-success">Under Safe Limit</span>
+                                            {% endif %}
+                                        </span>
+                                    {% endif %}
+                                </div>
+                                {% endfor %}
+                          </div>
                       </div>
-
-                      {% for pollutant in report.planning_application.pollutants %}
-                        <div class="row justify-content-center form-group">
-                            <span class="col-4">{{pollutant.pollutant.name.split()[0] }}<sub>{{pollutant.pollutant.name.split()[1]}}</sub></span>
-                            <span class="col-5" style="height: 2rem;">
-                              {{pollutant.pollutant_level | round(2)}}
-                                {% if pollutant.pollutant_id != 'AQI'%}
-                                  <span>&mu;/m<sup>3</sup></span>
-                                {% endif %}
-                            </span>
-                        </div>
-                        {% endfor %}
                   </div>
                   <div class="col-lg-8 scrollable">
                       <table class="table borderless text-center">
