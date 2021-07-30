@@ -6,6 +6,7 @@ from app.blueprints.report.model.report import Report
 class PlanningApplication(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
+    folio_number = db.Column(db.Integer)
     area_name = db.Column(db.String(100), nullable=False)
     square_footage = db.Column(db.Numeric(precision=2))
     town_id = db.Column(db.String(100), db.ForeignKey("town.id"), nullable=False)
