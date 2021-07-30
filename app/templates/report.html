@@ -87,11 +87,15 @@
                             {% for report_detail in report.report_details %}
                             <tr>
                               <th scope="row">
-                                  <img src="{{ url_for('static', filename='images/default_tree.jpeg') }}" style="width: 8em; height: 8em;"/>
+                                  {% if report_detail.tree.img_name is none %}
+                                    <img src="{{ url_for('static', filename='images/trees/default_tree.jpeg') }}" style="width: 8em; height: 8em;"/>
+                                  {% else %}
+                                      <img src="{{ url_for('static', filename='images/trees/'+report_detail.tree.img_name) }}" style="width: 8em; height: 8em;"/>
+                                  {% endif %}
                               </th>
                               <td class="align-middle">{{ report_detail.quantity }}</td>
                               <td class="align-middle">{{ report_detail.tree.name }}</td>
-                              <td class="align-middle">{{report_detail.pollutant.name.split()[0] }}<sub>{{report_detail.pollutant.name.split()[1]}}</sub></td
+                              <td class="align-middle">{{report_detail.pollutant.name.split()[0] }}<sub>{{report_detail.pollutant.name.split()[1]}}</sub></td>
                               <td class="align-middle">{{ report_detail.targeted_pollutant_tree_efficacy.effectiveness | round }}</td>
                             </tr>
                             {% endfor %}
