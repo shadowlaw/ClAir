@@ -11,6 +11,9 @@ from os import walk
 
 from app.blueprints.main.model.tree_type import TreeType
 from app.blueprints.main.model.user import User
+from app.blueprints.planning_application.model.aqi_status_enum import AQIStatus
+from app.blueprints.planning_application.model.limit_status_enum import LimitStatus
+from app.blueprints.planning_application.model.pollutant_limit_status import PollutantLimitStatus
 
 app = create_app()
 
@@ -115,7 +118,25 @@ def populate_trees():
         print('Done')
 
 
+def populate_pollutant_limit_statuses():
+    print('Populating AQI and Pollutant statuses')
+    with app.app_context():
+        db.session.add(PollutantLimitStatus(id=LimitStatus.OVER_LIMIT.value, description='Over Safe Limit'))
+        db.session.add(PollutantLimitStatus(id=LimitStatus.UNDER_LIMIT.value, description='Under Safe Limit'))
+
+        db.session.add(PollutantLimitStatus(id=AQIStatus.GD.value, description='Good'))
+        db.session.add(PollutantLimitStatus(id=AQIStatus.MD.value, description='Moderate'))
+        db.session.add(PollutantLimitStatus(id=AQIStatus.UHSG.value, description='Unhealthy for Sensitive Groups'))
+        db.session.add(PollutantLimitStatus(id=AQIStatus.UH.value, description='Unhealthy'))
+        db.session.add(PollutantLimitStatus(id=AQIStatus.VUH.value, description='Very Unhealthy'))
+        db.session.add(PollutantLimitStatus(id=AQIStatus.HDZ.value, description='Hazardous'))
+
+        db.session.commit()
+    print('Done')
+
+
 if __name__ == "__main__":
     load_parish_town_data()
     add_default_user()
     populate_trees()
+    populate_pollutant_limit_statuses()
