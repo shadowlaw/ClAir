@@ -1,0 +1,131 @@
+{% extends 'base.html'%}
+{% block links %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/report.css') }}">
+{% endblock links %}
+{% block title %}Planning Application Report - {{report.planning_application.area_name}}{% endblock title%}
+{% block content%}
+<div class="row justify-content-center h-100">
+      <div class="content col-12">
+        <div class="row">
+          <div class="col-12">
+              <div class="row align-items-end">
+                  <span class="col-7 h3">GREEN SPACE COMPOSITION REPORT</span>
+                  <span class="col-3 h5">Requester: {{report.planning_application.user.username}}</span>
+                  <span class="col-2 h5">Date: {{created_on}}</span>
+              </div>
+              <hr class="mt-1"/>
+              <div class="row align-items-center">
+                  <div class="col-lg-4">
+                      <div class="row mb-5">
+                          <div class="col-12"/>
+                              <div class="row mt-2 mb-3" style="transform: skewX(-10deg); height: 3em;">
+                                <span class="col-11 bg-success text-white h4 text-center">
+                                  <span class="row h-100 align-items-center">
+                                    <span class="col-12">
+                                      LOCATION DETAILS
+                                    </span>
+                                  </span>
+                                </span>
+                              </div>
+                              <div class="row justify-content-center">
+                                  <span class="col-4">Area Name</span>
+                                  <span class="col-5">{{report.planning_application.area_name}}</span>
+                              </div>
+                              <div class="row justify-content-center">
+                                  <span class="col-4">Parish Name</span>
+                                  <span class="col-5">{{report.planning_application.town.parish.name}}</span>
+                              </div>
+                              <div class="row justify-content-center">
+                                  <span class="col-4">Town Name</span>
+                                  <span class="col-5">{{report.planning_application.town.name}}</span>
+                              </div>
+                              <div class="row justify-content-center">
+                                  <span class="col-4">Town Size</span>
+                                  <span class="col-5">{{report.planning_application.town.size | round(2)}} sq. ft.</span>
+                              </div>
+                              <div class="row justify-content-center">
+                                  <span class="col-4">Area Size</span>
+                                  <span class="col-5">{{report.planning_application.square_footage | round(2)}} sq. ft.</span>
+                              </div>
+                              <div class="row justify-content-center">
+                                  <span class="col-4">Targeted Area</span>
+                                  <span class="col-5">{{((report.planning_application.square_footage/report.planning_application.town.size)*100) | round(2)}}%</span>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="row">
+                          <div class="col-12">
+                              <div class="row mb-3" style="transform: skewX(-10deg); height: 3em;">
+                                <span class="col-11 bg-success text-white h4 text-center">
+                                  <span class="row h-100 align-items-center">
+                                    <span class="col-12">
+                                      AIR QUALITY DETAILS
+                                    </span>
+                                  </span>
+                                </span>
+                              </div>
+
+                              {% for pollutant in report.planning_application.pollutants %}
+                                <div class="row justify-content-center">
+                                    <span class="col-3">{{pollutant.pollutant.name.split()[0] }}<sub>{{pollutant.pollutant.name.split()[1]}}</sub></span>
+                                    <span class="col-3" style="height: 2rem;">
+                                      {{pollutant.pollutant_level | round(2)}}
+                                        {% if pollutant.pollutant_id != 'AQI'%}
+                                          <span>&mu;/m<sup>3</sup></span>
+                                        {% endif %}
+                                    </span>
+                                    {% if pollutant.pollutant_id == 'AQI'%}
+                                        <span class="col-6">Moderate</span>
+                                    {% else %}
+                                        <span class="col-6">
+                                            {% if pollutant.pollutant_id != 'AQI' and pollutant.pollutant.safe_level - pollutant.pollutant_level < 0 %}
+                                                {{ ((pollutant.pollutant.safe_level - pollutant.pollutant_level)* -1) | round(2) }}
+                                                <span>&mu;/m<sup>3</sup></span> <span class="text-danger">Over Safe Limit</span>
+                                            {% else %}
+                                                {{ (pollutant.pollutant.safe_level - pollutant.pollutant_level) | round(2) }}
+                                                <span>&mu;/m<sup>3</sup></span>
+                                                <span class="text-success">Under Safe Limit</span>
+                                            {% endif %}
+                                        </span>
+                                    {% endif %}
+                                </div>
+                                {% endfor %}
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-lg-8 scrollable">
+                      <table class="table borderless text-center">
+                          <thead>
+                            <tr>
+                              <th scope="col"></th>
+                              <th scope="col">No. of Trees</th>
+                              <th scope="col">Name</th>
+                              <th scope="col">Targeted Pollutant</th>
+                              <th scope="col">Tree Efficacy</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {% for report_detail in report.report_details %}
+                            <tr>
+                              <th scope="row">
+                                  {% if report_detail.tree.img_name is none %}
+                                    <img src="{{ url_for('static', filename='images/trees/default_tree.jpeg') }}" style="width: 8em; height: 8em;"/>
+                                  {% else %}
+                                      <img src="{{ url_for('static', filename='images/trees/'+report_detail.tree.img_name) }}" style="width: 8em; height: 8em;"/>
+                                  {% endif %}
+                              </th>
+                              <td class="align-middle">{{ report_detail.quantity }}</td>
+                              <td class="align-middle">{{ report_detail.tree.name }}</td>
+                              <td class="align-middle">{{report_detail.pollutant.name.split()[0] }}<sub>{{report_detail.pollutant.name.split()[1]}}</sub></td>
+                              <td class="align-middle">{{ report_detail.targeted_pollutant_tree_efficacy.effectiveness | round }}</td>
+                            </tr>
+                            {% endfor %}
+                          </tbody>
+                        </table>
+                  </div>
+              </div>
+          </div>
+        </div>
+    </div>
+</div>
+{% endblock content%}

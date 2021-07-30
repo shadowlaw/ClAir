@@ -2,3 +2,8 @@
     margin-left: 100px !important;
     margin-right: 100px !important;
 }
+
+.scrollable {
+    height: 75vh;
+    overflow: auto;
+}
