@@ -1,5 +1,6 @@
 from app import db
 from datetime import datetime
+from app.blueprints.report.model.report import Report
 
 
 class PlanningApplication(db.Model):
@@ -11,3 +12,4 @@ class PlanningApplication(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     created_on = db.Column(db.DateTime, nullable=True, default=datetime.now)
     pollutants = db.relationship("PlanningApplicationAreaPollutant", backref="planning_application", lazy=True)
+    report = db.relationship("Report", backref="planning_application", lazy=True)
