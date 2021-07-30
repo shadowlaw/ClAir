@@ -1,5 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-light mb-5 px-5" style="background-color: #ddeaf6; font-size: 17px;">
-  <a class="navbar-brand h1 font-italic" styl href="{{url_for('main.home')}}" style="font-size: 27px !important;">ClAir</a>
+  <a class="navbar-brand" href="{{url_for('main.home')}}">
+      <img src="{{ url_for('static', filename='images/logo-colour-cropped.svg') }}" class="nav-logo">
+  </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-nav" aria-controls="main-nav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>

@@ -2,3 +2,8 @@
     margin-left: 100px !important;
     margin-right: 100px !important;
 }
+
+.nav-logo {
+    max-width: 4rem;
+    height: 4rem;
+}
