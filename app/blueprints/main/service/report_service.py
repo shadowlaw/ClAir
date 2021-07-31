@@ -15,14 +15,14 @@ def getTrees(pollutant_list):
 
 # pollutants - A list of TownPollutant Objects
 def get_recommendations(square_footage,pollutants):
-    results = {} # key: tree_id; value: amount to plant
+    results = {} # key: tree_id; value: [amount to plant, pollutant targeted]
     square_footage_left = square_footage
     # Sort pollutants in order of how much they exceed safety limit
     pollutants = sorted(pollutants, key=lambda x: x.pollutant_level - getSafeLevel(x.pollutant_id))
     # Remove any pollutant below safety limit
     pollutants = [x for x in pollutants if x.pollutant_level - getSafeLevel(x.pollutant_id) > 0]
 
-    trees = getTrees(pollutants)
+    #trees = getTrees(pollutants)
 
     # To keep track of how much pollutant levels exceed safe levels
     p = {}
@@ -44,6 +44,7 @@ def get_recommendations(square_footage,pollutants):
 
     while square_footage_left > 0 or not allSafe():
         for pollutant in pollutants:
+            f = Pollutant.query.filter_by(id=pollutant_id).first()
             best_tree = getBestTree(pollutant.pollutant_id)
             square_footage_left -= best_tree.space_required
 
@@ -61,9 +62,9 @@ def get_recommendations(square_footage,pollutants):
                     p[x.pollutant_id] -= x.effectiveness
 
             if best_tree.tree_id in results:
-                results[best_tree.tree_id] += 1
+                results[best_tree.tree_id][0] += 1
             else:
-                results[best_tree.tree_id] = 1
+                results[best_tree.tree_id] = [1,f.name]
     return results
 
 def generate_report():
