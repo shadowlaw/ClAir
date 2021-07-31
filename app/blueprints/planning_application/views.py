@@ -93,7 +93,6 @@ def new_application():
                 status_id=LimitStatus.get_safe_limit_status(pollutant.safe_level, float(planning_application_form.O3.data)).value
             ))
             db.session.commit()
-            generate_report(application_id)
             flash("Planning Application Created", "success")
             return redirect(url_for("planning_application_views.specific_application", application_id=application_header.id))
         except Exception as e:
@@ -116,6 +115,11 @@ def new_application():
 def specific_application(application_id):
 
     planning_application = PlanningApplication.query.filter_by(id=application_id).first()
+
+    def gen_report():
+        rep = generate_report(application_id)
+        flash("Report Created", "success")
+        return redirect(url_for("report_views.specific_report", report_id=rep))
 
     if planning_application:
         return render_template('planning_application.html', application=planning_application, requester=planning_application.user,

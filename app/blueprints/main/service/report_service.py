@@ -87,3 +87,5 @@ def generate_report(application_id):
         db.session.add(details)
 
     db.session.commit()
+
+    return report.id
