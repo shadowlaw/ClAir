@@ -3,6 +3,7 @@ import string
 from app import db
 from app import create_app
 from app.blueprints.main.model.parish import Parish
+from app.blueprints.main.model.pollutant import Pollutant
 from app.blueprints.main.model.town import Town
 from app.blueprints.main.model.tree import Tree
 from app.blueprints.main.model.tree_efficacy import TreeEfficacy
@@ -135,8 +136,22 @@ def populate_pollutant_limit_statuses():
     print('Done')
 
 
+def populate_pollutants():
+    print('populating pollutants table')
+    pollutant_data = read_csv_file('data/who_aqi.csv')
+
+    with app.app_context():
+        for pollutant in pollutant_data:
+            db.session.add(Pollutant(id=pollutant['id'], name=pollutant['name'], safe_level=pollutant['safe_level']))
+
+        db.session.commit()
+    print('Done')
+
+
 if __name__ == "__main__":
     load_parish_town_data()
     add_default_user()
     populate_trees()
     populate_pollutant_limit_statuses()
+    populate_pollutants()
+    print('DEFAULT USERNAME: default\nDEFAULT PASSWORD: danger')
