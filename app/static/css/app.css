@@ -1,0 +1,12 @@
+.container-sm {
+    margin-left: 100px !important;
+    margin-right: 100px !important;
+}
+.scrollable {
+    height: 73vh;
+    overflow: auto;
+}
+.nav-logo {
+    max-width: 4rem;
+    height: 4rem;
+}

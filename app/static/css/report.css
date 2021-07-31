@@ -1,0 +1,7 @@
+.borderless td, .borderless th, .borderless thead th {
+    border: none;
+}
+
+.content {
+    font-size: 17px
+}

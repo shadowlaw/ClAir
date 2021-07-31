@@ -6,7 +6,7 @@ from app import db
 
 app = create_app()
 
-migrate = Migrate(app, db)
+migrate = Migrate(app, db, render_as_batch=app.config['SQLALCHEMY_DATABASE_URI'].startswith('sqlite'))
 manager = Manager(app)
 manager.add_command('db', MigrateCommand)
 
