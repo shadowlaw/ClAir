@@ -92,8 +92,8 @@ def new_application():
                 pollutant_level=float(planning_application_form.O3.data),
                 status_id=LimitStatus.get_safe_limit_status(pollutant.safe_level, float(planning_application_form.O3.data)).value
             ))
-            generate_report(application_header.id)
             db.session.commit()
+            generate_report(application_id)
             flash("Planning Application Created", "success")
             return redirect(url_for("planning_application_views.specific_application", application_id=application_header.id))
         except Exception as e:
