@@ -15,6 +15,7 @@ from app.blueprints.main.model.user import User
 from app.blueprints.main.model.pollutant import Pollutant
 from app.blueprints.planning_application.form.planning_application import PlanningApplicationForm
 from app.blueprints.main.service.town_service import get_towns
+from app.blueprints.main.service.report_service import generate_report
 from datetime import datetime
 from flask_login import login_required, current_user
 
@@ -91,6 +92,7 @@ def new_application():
                 pollutant_level=float(planning_application_form.O3.data),
                 status_id=LimitStatus.get_safe_limit_status(pollutant.safe_level, float(planning_application_form.O3.data)).value
             ))
+            generate_report(application_header.id)
             db.session.commit()
             flash("Planning Application Created", "success")
             return redirect(url_for("planning_application_views.specific_application", application_id=application_header.id))

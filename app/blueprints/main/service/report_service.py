@@ -3,6 +3,11 @@ from app.blueprints.main.model.pollutant import Pollutant
 from app.blueprints.main.model.tree_efficacy import TreeEfficacy
 from app.blueprints.main.model.town_pollutant import TownPollutant
 
+from app.blueprints.report.model.report import Report
+from app.blueprints.report.model.report_detail import ReportDetail
+
+from app.blueprints.planning_application.model.planning_application import PlanningApplication
+
 def getSafeLevel(pollutant_id):
     pollutant = Pollutant.query.filter_by(id = pollutant_id).first()
     return pollutant.safe_level
@@ -67,5 +72,18 @@ def get_recommendations(square_footage,pollutants):
                 results[best_tree.tree_id] = [1,f.name]
     return results
 
-def generate_report():
-    pass
+def generate_report(application_id):
+
+    appl = PlanningApplication.query.filter_by(id=application_id).first()
+
+    recc = get_recommendations(appl.square_footage,appl.pollutants)
+
+    report = Report(application_id)
+    db.session.add(report)
+    db.session.flush()
+
+    for r in recc.keys():
+        details = ReportDetail(report_id=report.id,tree_id=r,quantity=recc[r][0],targeted_pollutant=recc[r][1])
+        db.session.add(details)
+
+    db.session.commit()
