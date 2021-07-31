@@ -59,6 +59,7 @@ def new_application():
 
 
 @planning_application_views.route("/<int:application_id>", methods=["GET"])
+@login_required
 def specific_application(application_id):
 
     planning_application = PlanningApplication.query.filter_by(id=application_id).first()

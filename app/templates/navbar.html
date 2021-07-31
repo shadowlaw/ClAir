@@ -18,6 +18,13 @@
       {% else %}
         <a class="nav-item nav-link" href="{{url_for('planning_application_views.new_application')}}">New Planning Application</a>
       {% endif %}
+      {% if current_user.role == 'ADMIN' %}
+        {% if request.endpoint == 'admin_views.upload_pollutant' %}
+            <a class="nav-item nav-link active font-weight-bold text-success" href="{{url_for('admin_views.upload_pollutant')}}">Upload Pollutants</a>
+        {% else %}
+            <a class="nav-item nav-link" href="{{url_for('planning_application_views.new_application')}}">Upload Pollutants</a>
+        {% endif %}
+      {% endif %}
     </div>
     <a class="nav-item nav-link" href="{{url_for('main.logout')}}">Logout</a>
   </div>
