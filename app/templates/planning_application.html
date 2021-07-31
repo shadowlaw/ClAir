@@ -110,7 +110,8 @@
               </div>
             </div>
             <div class="row justify-content-end mt-2">
-              <input class="col-4 btn btn-lg btn-outline-info" type="button" value="Generate Report" onclick="gen_report()"/>
+              <!-- <input class="col-4 btn btn-lg btn-outline-info" type="button" value="Generate Report" onclick="gen_report()"/> -->
+              <a class="col-4 btn btn-lg btn-outline-info" href="{{url_for('planning_application_views.gen_report', application_id=application.id)}}">Generate Report</a>
             </div>
           </div>
         </div>

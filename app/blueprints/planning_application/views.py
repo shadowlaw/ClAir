@@ -116,13 +116,14 @@ def specific_application(application_id):
 
     planning_application = PlanningApplication.query.filter_by(id=application_id).first()
 
-    def gen_report():
-        rep = generate_report(application_id)
-        flash("Report Created", "success")
-        return redirect(url_for("report_views.specific_report", report_id=rep))
-
     if planning_application:
         return render_template('planning_application.html', application=planning_application, requester=planning_application.user,
                                request_date=str(planning_application.created_on.strftime(current_app.config['DISPLAY_DATE_FORMAT'])))
 
     abort(404)
+
+@planning_application_views.route("/<int:application_id>", methods=["GET"])
+def gen_report(application_id):
+    rep = generate_report(application_id)
+    flash("Report Created", "success")
+    return redirect(url_for("report_views.specific_report", report_id=rep))
