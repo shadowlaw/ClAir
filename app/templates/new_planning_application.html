@@ -35,6 +35,11 @@
               {% else %}
                 {{ render_field(application_form.town, class='form-control col-6') }}
               {% endif %}
+              {% if application_form.folio_number.errors %}
+                {{ render_field_with_errors(application_form.folio_number, class='form-control col-6 is-invalid') }}
+              {% else %}
+                {{ render_field(application_form.folio_number, class='form-control col-6') }}
+              {% endif %}
               {% if application_form.area_name.errors %}
                 {{ render_field_with_errors(application_form.area_name, class='form-control col-6 is-invalid') }}
               {% else %}
