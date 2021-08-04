@@ -1,3 +1,4 @@
+from app import db
 from app.blueprints.main.model.tree import Tree
 from app.blueprints.main.model.pollutant import Pollutant
 from app.blueprints.main.model.tree_efficacy import TreeEfficacy
@@ -48,8 +49,15 @@ def get_recommendations(square_footage,pollutants):
         return Tree.query.filter_by(id=chosen.tree_id).first()
 
     while square_footage_left > 0 or not allSafe():
+
+        if square_footage_left <= 0:
+            break
+
         for pollutant in pollutants:
-            f = Pollutant.query.filter_by(id=pollutant_id).first()
+            if pollutant.pollutant_id == 'AQI':
+                continue
+
+            f = Pollutant.query.filter_by(id=pollutant.pollutant_id).first()
             best_tree = getBestTree(pollutant.pollutant_id)
             square_footage_left -= best_tree.space_required
 
@@ -59,18 +67,19 @@ def get_recommendations(square_footage,pollutants):
                 break
 
             # Get all the pollutants the tree is effective against
-            all_tree_pollutants = TreeEfficacy.query.filter_by(tree_id=best_tree.tree_id).all()
+            all_tree_pollutants = TreeEfficacy.query.filter_by(tree_id=best_tree.id).all()
 
             # Reduce the pollutant levels in the dict
             for x in all_tree_pollutants:
                 if x.pollutant_id in p.keys():
                     p[x.pollutant_id] -= x.effectiveness
 
-            if best_tree.tree_id in results:
-                results[best_tree.tree_id][0] += 1
+            if best_tree.id in results:
+                results[best_tree.id][0] += 1
             else:
-                results[best_tree.tree_id] = [1,f.name]
+                results[best_tree.id] = [1, f.id]
     return results
+
 
 def generate_report(application_id):
 
@@ -78,7 +87,7 @@ def generate_report(application_id):
 
     recc = get_recommendations(appl.square_footage,appl.pollutants)
 
-    report = Report(application_id)
+    report = Report(application_id=application_id)
     db.session.add(report)
     db.session.flush()
 

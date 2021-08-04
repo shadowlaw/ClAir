@@ -122,7 +122,8 @@ def specific_application(application_id):
 
     abort(404)
 
-@planning_application_views.route("/<int:application_id>", methods=["GET"])
+
+@planning_application_views.route("/report/<int:application_id>", methods=["GET"])
 def gen_report(application_id):
     rep = generate_report(application_id)
     flash("Report Created", "success")
