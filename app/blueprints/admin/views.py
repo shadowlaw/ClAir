@@ -3,9 +3,10 @@ from io import TextIOWrapper
 from app import db
 from datetime import datetime
 
-from flask import Blueprint, render_template, request, current_app
+from flask import Blueprint, render_template, request, current_app, flash
 from flask_login import login_required
 
+from app.blueprints.admin.exception.UnsupportedFieldException import UnsupportedFieldException
 from app.blueprints.admin.form.air_quality_upload_form import AirQualityUploadForm
 from app.blueprints.main.model.pollutant import Pollutant
 from app.blueprints.main.model.town import Town
@@ -25,6 +26,9 @@ def air_quality_upload():
         csv_data = csv.DictReader(TextIOWrapper(aq_upload.file.data), delimiter=',', quotechar='"')
         pollutants = [pollutant.id for pollutant in Pollutant.query.all()]
         file_pollutant = csv_data.fieldnames[2:]
+        upload_complete = False
+        message = 'Upload Failed. No data in file'
+        category = 'warning'
 
         for row in csv_data:
             town = Town.query.filter_by(id=row['Town ID']).first()
@@ -33,23 +37,28 @@ def air_quality_upload():
                 try:
                     for key in file_pollutant:
                         if key not in pollutants:
-                            # TODO: log error, "field {} from file is not a valid pollutant"
-                            # TODO: flash message of field with error
-                            pass
+                            error = 'Pollutant %s is not supported by the system' % key
+                            raise UnsupportedFieldException(error)
 
                         db.session.add(TownPollutant(town_id=town.id,
                                                      collection_date=datetime.strptime(row['Date'], '%m/%d/%Y'),
                                                      pollutant_id=key, pollutant_level=row[key]))
                     db.session.commit()
-                    # TODO: flash success message
-                    # TODO: return to upload page
+
                 except Exception as e:
                     db.session.rollback()
                     current_app.logger.error(e)
-                    # TODO: flash general error message
-                    # TODO: return to upload page
+                    flash(e, 'danger')
+                    break
+                flash('Air Quality Upload Complete', 'success')
             else:
-                # TODO: flash message with incorrect town names
-                pass
+                flash('Town %s does not exist' % row['Town ID'])
+                break
+
+        if upload_complete:
+            message = 'Upload Failed Successful'
+            category = 'success'
+
+        flash(message, category)
 
     return render_template('air_quality_upload.html', upload_form=aq_upload)
