@@ -9,7 +9,7 @@
     <div class="row">
       <div class="col-12">
         <div class="row align-items-end">
-            <span class="col-7 h3">Planning Application</span>
+            <span class="col-7 h3"> View Planning Application</span>
             <span class="col-3 h5">Requestor: {{requester.username}}</span>
             <span class="col-2 h5">Date: {{request_date}}</span>
         </div>
@@ -87,9 +87,9 @@
                     <span class="col-4">{{pollutant.pollutant.name.split()[0] }}<sub>{{pollutant.pollutant.name.split()[1]}}</sub></span>
                     <span class="col-7 bg-white" style="height: 2rem;">
                       <div class="row justify-content-center align-items-center" style="height:100%;">
-                        {{pollutant.pollutant_level | round(2)}}
+                        {{'{:,.1f}'.format(pollutant.pollutant_level)}}
                         {% if pollutant.pollutant_id != 'AQI'%}
-                          <span>&mu;/m<sup>3</sup></span>
+                          <span>&mu;g/m<sup>3</sup></span>
                         {% endif %}
                       </div>
                     </span>
@@ -102,7 +102,7 @@
                     <span class="col-4">{{pollutant.pollutant.name.split()[0] }}<sub>{{pollutant.pollutant.name.split()[1]}}</sub></span>
                     <span class="col-7 bg-white" style="height: 2rem;">
                       <div class="row justify-content-center align-items-center" style="height:100%;">
-                        {{pollutant.pollutant_level | round(2)}} <span>&mu;/m<sup>3</sup></span>
+                        {{'{:,.1f}'.format(pollutant.pollutant_level)}} <span>&mu;g/m<sup>3</sup></span>
                       </div>
                     </span>
                   </div>
