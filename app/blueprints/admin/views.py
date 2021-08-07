@@ -8,6 +8,7 @@ from flask_login import login_required
 
 from app.blueprints.admin.exception.UnsupportedFieldException import UnsupportedFieldException
 from app.blueprints.admin.form.air_quality_upload_form import AirQualityUploadForm
+from app.blueprints.admin.utils.wrappers import admin_role_required
 from app.blueprints.main.model.pollutant import Pollutant
 from app.blueprints.main.model.town import Town
 from app.blueprints.main.model.town_pollutant import TownPollutant
@@ -16,7 +17,7 @@ admin_views = Blueprint('admin_views', __name__)
 
 
 @admin_views.route('/air_quality/upload', methods=['GET', 'POST'])
-# add role restriction
+@admin_role_required
 @login_required
 def air_quality_upload():
     aq_upload = AirQualityUploadForm()
