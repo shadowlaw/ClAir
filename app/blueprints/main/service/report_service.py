@@ -23,8 +23,10 @@ def getTrees(pollutant_list):
 def get_recommendations(square_footage,pollutants):
     results = {} # key: tree_id; value: [amount to plant, pollutant targeted]
     square_footage_left = square_footage
-    # Sort pollutants in order of how much they exceed safety limit
-    pollutants = sorted(pollutants, key=lambda x: x.pollutant_level - getSafeLevel(x.pollutant_id))
+    # Known pollutants in order of severity
+    priority = {"Ozone" : 6, "PM2.5" : 5, "PM10": 4, "NO2": 3, "CO": 2, "SO2": 1, "AQI": 0}
+    # Sort pollutants in order of severity
+    pollutants = sorted(pollutants, key=lambda x: priority[x.pollutant_id], reverse=True)
     # Remove any pollutant below safety limit
     pollutants = [x for x in pollutants if x.pollutant_level - getSafeLevel(x.pollutant_id) > 0]
 
