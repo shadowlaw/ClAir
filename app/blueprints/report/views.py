@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, current_app
+from flask_login import login_required
 from werkzeug.exceptions import abort
 
 from app.blueprints.main.model.tree_efficacy import TreeEfficacy
@@ -9,6 +10,7 @@ report_views = Blueprint('report_views', __name__)
 
 
 @report_views.route('/<int:report_id>')
+@login_required
 def specific_report(report_id):
     report = Report.query.filter_by(id=report_id).first()
     if report:

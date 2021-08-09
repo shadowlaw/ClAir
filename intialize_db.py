@@ -12,6 +12,7 @@ from os import walk
 
 from app.blueprints.main.model.tree_type import TreeType
 from app.blueprints.main.model.user import User
+from app.blueprints.main.model.user_role import UserRole
 from app.blueprints.planning_application.model.aqi_status_enum import AQIStatus
 from app.blueprints.planning_application.model.limit_status_enum import LimitStatus
 from app.blueprints.planning_application.model.pollutant_limit_status import PollutantLimitStatus
@@ -53,7 +54,10 @@ def load_parish_town_data():
 def add_default_user():
     print("Creating default user")
     with app.app_context():
-        db.session.add(User(username='default', password='pbkdf2:sha256:150000$GjuQgVkr$003437af92ded1a1d99ebcc56bf20d9bc4dd03e471380aa73c2a7a15a9321194'))
+        db.session.add(User(username='admin', password='pbkdf2:sha256:150000$GjuQgVkr$003437af92ded1a1d99ebcc56bf20d9bc4dd03e471380aa73c2a7a15a9321194'
+                            , role=UserRole.ADMIN.value))
+        db.session.add(User(username='default', password='pbkdf2:sha256:150000$GjuQgVkr$003437af92ded1a1d99ebcc56bf20d9bc4dd03e471380aa73c2a7a15a9321194'
+                            , role=UserRole.REGULAR.value))
         db.session.commit()
     print("Done")
 
@@ -155,3 +159,4 @@ if __name__ == "__main__":
     populate_pollutant_limit_statuses()
     populate_pollutants()
     print('DEFAULT USERNAME: default\nDEFAULT PASSWORD: danger')
+    print('ADMIN USERNAME: admin\nDEFAULT PASSWORD: danger')
