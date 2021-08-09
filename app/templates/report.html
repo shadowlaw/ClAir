@@ -106,6 +106,7 @@
                               <th scope="col">Name</th>
                               <th scope="col">Targeted Pollutant</th>
                               <th scope="col">Tree Efficacy</th>
+                              <th scope="col">Secondary Pollutants (Efficacy)</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -122,6 +123,13 @@
                               <td class="align-middle">{{ report_detail.tree.name }}</td>
                               <td class="align-middle">{{report_detail.pollutant.name.split()[0] }}<sub>{{report_detail.pollutant.name.split()[1]}}</sub></td>
                               <td class="align-middle">{{ report_detail.targeted_pollutant_tree_efficacy.effectiveness | round }}</td>
+                              <td class="align-middle">
+                                  {% for sec_pol in report_detail.secondary_pollutants[:2] | sort(attribute='tree_efficacy.effectiveness', reverse=True) %}
+                                    <div class="row">
+                                        <span class="col">{{ sec_pol.pollutant.name.split()[0] }}<sub>{{ sec_pol.pollutant.name.split()[1] }}</sub> ({{ sec_pol.tree_efficacy.effectiveness | round }})</span>
+                                    </div>
+                                  {% endfor %}
+                              </td>
                             </tr>
                             {% endfor %}
                           </tbody>

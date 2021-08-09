@@ -29,9 +29,7 @@ def get_recommendations(square_footage,pollutants):
     # Sort pollutants in order of severity
     pollutants = sorted(pollutants, key=lambda x: priority[x.pollutant_id], reverse=True)
     # Remove any pollutant below safety limit
-    pollutants = [x for x in pollutants if x.pollutant_level - getSafeLevel(x.pollutant_id) > 0]
-
-    #trees = getTrees(pollutants)
+    pollutants = [x for x in pollutants if x.pollutant_level - getSafeLevel(x.pollutant_id) > 0 and x.pollutant_id != 'AQI']
 
     # To keep track of how much pollutant levels exceed safe levels
     p = {}
@@ -73,7 +71,6 @@ def get_recommendations(square_footage,pollutants):
             all_tree_pollutants = TreeEfficacy.query.filter_by(tree_id=best_tree.id).all()
 
             # Reduce the pollutant levels in the dict
-            ol_poll = list()
             for x in all_tree_pollutants:
                 if x.pollutant_id in p.keys():
                     p[x.pollutant_id] -= x.effectiveness
@@ -82,8 +79,7 @@ def get_recommendations(square_footage,pollutants):
                 results[best_tree.id][0] += 1
             else:
                 results[best_tree.id] = [1, f.id]
-            ol_poll.append(f.id)
-    return results, ol_poll
+    return results, [pollutant.pollutant_id for pollutant in pollutants]
 
 
 def generate_report(application_id):
