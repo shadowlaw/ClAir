@@ -126,8 +126,8 @@ def populate_trees():
 def populate_pollutant_limit_statuses():
     print('Populating AQI and Pollutant statuses')
     with app.app_context():
-        db.session.add(PollutantLimitStatus(id=LimitStatus.OVER_LIMIT.value, description='Over Safe Limit'))
-        db.session.add(PollutantLimitStatus(id=LimitStatus.UNDER_LIMIT.value, description='Under Safe Limit'))
+        db.session.add(PollutantLimitStatus(id=LimitStatus.OVER_LIMIT.value, description='Over Limit'))
+        db.session.add(PollutantLimitStatus(id=LimitStatus.UNDER_LIMIT.value, description='Under Limit'))
 
         db.session.add(PollutantLimitStatus(id=AQIStatus.GD.value, description='Good'))
         db.session.add(PollutantLimitStatus(id=AQIStatus.MD.value, description='Moderate'))

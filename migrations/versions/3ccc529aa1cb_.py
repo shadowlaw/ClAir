@@ -23,7 +23,7 @@ def upgrade():
     sa.Column('application_id', sa.Integer(), nullable=False),
     sa.Column('created_on', sa.DateTime(), nullable=False),
     sa.ForeignKeyConstraint(['application_id'], ['planning_application.id'], ),
-    sa.PrimaryKeyConstraint('id', 'application_id')
+    sa.PrimaryKeyConstraint('id')
     )
     op.create_table('report_detail',
     sa.Column('report_id', sa.Integer(), nullable=False),

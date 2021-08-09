@@ -8,4 +8,5 @@ class ReportDetail(db.Model):
     quantity = db.Column(db.Integer)
     targeted_pollutant = db.Column(db.String(100), db.ForeignKey("pollutant.id"))
     targeted_pollutant_tree_efficacy = None
+    secondary_pollutants = None
     pollutant = db.relationship('Pollutant', lazy=True)

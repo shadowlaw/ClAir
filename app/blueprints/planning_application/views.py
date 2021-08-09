@@ -15,6 +15,7 @@ from app.blueprints.main.model.user import User
 from app.blueprints.main.model.pollutant import Pollutant
 from app.blueprints.planning_application.form.planning_application import PlanningApplicationForm
 from app.blueprints.main.service.town_service import get_towns
+from app.blueprints.main.service.report_service import generate_report
 from datetime import datetime
 from flask_login import login_required, current_user
 
@@ -121,3 +122,10 @@ def specific_application(application_id):
                                request_date=str(planning_application.created_on.strftime(current_app.config['DISPLAY_DATE_FORMAT'])))
 
     abort(404)
+
+
+@planning_application_views.route("/report/<int:application_id>", methods=["GET"])
+def gen_report(application_id):
+    rep = generate_report(application_id)
+    flash("Report Created", "success")
+    return redirect(url_for("report_views.specific_report", report_id=rep))
