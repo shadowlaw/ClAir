@@ -45,15 +45,15 @@
                               </div>
                               <div class="row justify-content-center">
                                   <span class="col-4">Town Size</span>
-                                  <span class="col-5">{{report.planning_application.town.size | round(2)}} sq. ft.</span>
+                                  <span class="col-5">{{'{:,.1f}'.format(report.planning_application.town.size) }} sq. ft.</span>
                               </div>
                               <div class="row justify-content-center">
                                   <span class="col-4">Area Size</span>
-                                  <span class="col-5">{{report.planning_application.square_footage | round(2)}} sq. ft.</span>
+                                  <span class="col-5">{{'{:,.1f}'.format(report.planning_application.square_footage) }} sq. ft.</span>
                               </div>
                               <div class="row justify-content-center">
                                   <span class="col-4">Targeted Area</span>
-                                  <span class="col-5">{{((report.planning_application.square_footage/report.planning_application.town.size)*100) | round(2)}}%</span>
+                                  <span class="col-5">{{'{:,.1f}'.format(((report.planning_application.square_footage/report.planning_application.town.size)*100)) }}%</span>
                               </div>
                           </div>
                       </div>
@@ -73,9 +73,9 @@
                                 <div class="row justify-content-center">
                                     <span class="col-2">{{pollutant.pollutant.name.split()[0] }}<sub>{{pollutant.pollutant.name.split()[1]}}</sub></span>
                                     <span class="col-3" style="height: 2rem;">
-                                      {{pollutant.pollutant_level | round(2)}}
+                                      {{'{:,.1f}'.format(pollutant.pollutant_level)}}
                                         {% if pollutant.pollutant_id != 'AQI'%}
-                                          <span>&mu;/m<sup>3</sup></span>
+                                          <span>&mu;g/m<sup>3</sup></span>
                                         {% endif %}
                                     </span>
                                     {% if pollutant.pollutant_id == 'AQI'%}
@@ -83,11 +83,11 @@
                                     {% else %}
                                         <span class="col-7">
                                             {% if pollutant.pollutant_id != 'AQI' and pollutant.status.id == 'OL' %}
-                                                {{ ((pollutant.pollutant.safe_level - pollutant.pollutant_level)* -1) | round(2) }}
-                                                <span>&mu;/m<sup>3</sup></span> <span class="text-danger">{{pollutant.status.description}}</span>
+                                                {{ '{:,.1f}'.format(((pollutant.pollutant.safe_level - pollutant.pollutant_level)* -1)) }}
+                                                <span>&mu;g/m<sup>3</sup></span> <span class="text-danger">{{pollutant.status.description}}</span>
                                             {% else %}
-                                                {{ (pollutant.pollutant.safe_level - pollutant.pollutant_level) | round(2) }}
-                                                <span>&mu;/m<sup>3</sup></span>
+                                                {{'{:,.1f}'.format((pollutant.pollutant.safe_level - pollutant.pollutant_level)) }}
+                                                <span>&mu;g/m<sup>3</sup></span>
                                                 <span class="text-success">{{pollutant.status.description}}</span>
                                             {% endif %}
                                         </span>

@@ -3,7 +3,7 @@
     {{ field.label(class="form-control-label col-4 col-form-label")}}
     {{ field(**kwargs)|safe }}
     {% if kwargs['is_pollutant'] %}
-      <span class="col-1">&mu;/m<sup>3</sup></span>
+      <span class="col-1">&mu;g/m<sup>3</sup></span>
     {% endif %}
   </div>
 {% endmacro %}
@@ -13,7 +13,7 @@
     {{ field.label(class="form-control-label col-4 col-form-label")}}
     {{ field(**kwargs)|safe }}
     {% if kwargs['is_pollutant'] %}
-      <span class="col-1">&mu;/m<sup>3</sup></span>
+      <span class="col-1">&mu;g/m<sup>3</sup></span>
     {% endif %}
     {% if field.errors %}
       <div class="row pl-3 invalid-feedback">
