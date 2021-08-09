@@ -44,20 +44,24 @@ def air_quality_upload():
                         db.session.add(TownPollutant(town_id=town.id,
                                                      collection_date=datetime.strptime(row['Date'], '%m/%d/%Y'),
                                                      pollutant_id=key, pollutant_level=row[key]))
-                    db.session.commit()
-
+                    upload_complete = True
                 except Exception as e:
+                    upload_complete = False
                     db.session.rollback()
                     current_app.logger.error(e)
-                    flash(e, 'danger')
+                    message = e
+                    category = 'danger'
                     break
-                flash('Air Quality Upload Complete', 'success')
             else:
-                flash('Town %s does not exist' % row['Town ID'])
+                db.session.rollback()
+                upload_complete = False
+                message = 'Town %s does not exist' % row['Town ID']
+                current_app.logger.warn(message)
                 break
 
         if upload_complete:
-            message = 'Upload Failed Successful'
+            db.session.commit()
+            message = 'Upload Successful'
             category = 'success'
 
         flash(message, category)
