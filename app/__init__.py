@@ -37,9 +37,11 @@ def create_app(config=Config()):
     from app.blueprints.main.api import main_api
     from app.blueprints.planning_application.views import planning_application_views
     from app.blueprints.report.views import report_views
+    from app.blueprints.admin.views import admin_views
     app.register_blueprint(main)
     app.register_blueprint(main_api, url_prefix='/api')
     app.register_blueprint(planning_application_views, url_prefix="/planning_application")
     app.register_blueprint(report_views, url_prefix="/report")
+    app.register_blueprint(admin_views, url_prefix="/admin")
 
     return app

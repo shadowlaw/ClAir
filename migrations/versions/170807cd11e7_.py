@@ -22,9 +22,10 @@ def upgrade():
     sa.Column('town_id', sa.String(length=100), nullable=False),
     sa.Column('pollutant_id', sa.String(length=100), nullable=False),
     sa.Column('pollutant_level', sa.Numeric(precision=2), nullable=False),
+    sa.Column('collection_date', sa.DateTime(), nullable=False),
     sa.ForeignKeyConstraint(['pollutant_id'], ['pollutant.id'], ),
     sa.ForeignKeyConstraint(['town_id'], ['town.id'], ),
-    sa.PrimaryKeyConstraint('town_id', 'pollutant_id')
+    sa.PrimaryKeyConstraint('town_id', 'pollutant_id', 'collection_date')
     )
     # ### end Alembic commands ###
 

@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block title %}Town Pollutant Upload{% endblock title%}
+{% block links %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/upload.css') }}">
+{% endblock links %}
+{% block content%}
+  <section>
+  <form action="{{ url_for('admin_views.air_quality_upload') }}"  novalidate method="POST" enctype="multipart/form-data">
+    {{ upload_form.csrf_token }}
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label class="control-label h5">Upload Air Quality Data</label>
+            {% if upload_form.file %}
+              <div class="row justify-content-center">
+                {% for error in upload_form.file.errors %}
+                  <span class="text-danger">{{ error }} </span>
+                {% endfor %}
+              </div>
+            {% endif %}
+            <div class="preview-zone d-none">
+              <div class="box box-solid">
+                <div class="box-header with-border">
+                  <div><b>Preview</b></div>
+                  <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-danger btn-xs remove-preview">
+                      <i class="fa fa-times"></i> Reset This Form
+                    </button>
+                  </div>
+                </div>
+                <div class="box-body"></div>
+              </div>
+            </div>
+            <div class="dropzone-wrapper">
+              <div class="dropzone-desc">
+                <svg xmlns="http://www.w3.org/2000/svg" width="6rem" height="6rem" class="bi bi-cloud-arrow-up-fill fill-blue" viewBox="0 0 16 16">
+                  <path d="M8 2a5.53 5.53 0 0 0-3.594 1.342c-.766.66-1.321 1.52-1.464 2.383C1.266 6.095 0 7.555 0 9.318 0 11.366 1.708 13 3.781 13h8.906C14.502 13 16 11.57 16 9.773c0-1.636-1.242-2.969-2.834-3.194C12.923 3.999 10.69 2 8 2zm2.354 5.146a.5.5 0 0 1-.708.708L8.5 6.707V10.5a.5.5 0 0 1-1 0V6.707L6.354 7.854a.5.5 0 1 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2z"/>
+                </svg>
+                <p>Click here to choose a csv file or drag it here.</p>
+              </div>
+              {{ upload_form.file(class='dropzone') }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          {{ upload_form.submit(class='btn btn-outline-info') }}
+        </div>
+      </div>
+    </div>
+  </form>
+</section>
+{% endblock content %}
+
+{% block scripts %}
+  <script src="{{ url_for('static', filename='js/upload.js') }}"></script>
+{% endblock scripts %}
