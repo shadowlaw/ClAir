@@ -47,8 +47,7 @@ $(document).ready(() => {
 		                $(`#${data["name"]}`).val(data["value"].toFixed(1));
 		                $(`#${data["name"]}`).attr('readonly', true);
 		            });
-		            $("#aq-date").text(response.date_range);
-		            $("#aq-date-container").removeClass("d-none");
+		            set_date_range(response.date_range);
 		    }
 		    if (jqXHR.status == 204) {
 		            clear_pollutants()
@@ -64,6 +63,11 @@ $(document).ready(() => {
 		    }
 		})
 	});
+
+	if ($('#aq-date-ff').val() && $('#aq-date-ff').val() !== ""){
+	    set_date_range($('#aq-date-ff').val())
+	}
+//	TODO: set populated pollutant fields to disabled after invalid form submission
 });
 
 reset_options = (element_id, field_name) => {
@@ -85,4 +89,11 @@ clear_pollutants = () => {
 clear_aq_date_field = () => {
     $("#aq-date").text('')
     $("#aq-date-container").addClass("d-none")
+    $('#aq-date-ff').val(null);
+}
+
+set_date_range = (range) => {
+    $("#aq-date").text(range);
+    $("#aq-date-container").removeClass("d-none");
+    $('#aq-date-ff').val(range)
 }

@@ -8,6 +8,7 @@ from flask import Markup
 class PlanningApplicationForm(FlaskForm):
     parish = SelectField("Parish", validators=[InputRequired()])
     town = SelectField("Town", choices=[], validators=[InputRequired()])
+    aq_date_range = StringField(id='aq-date-ff')
     folio_number = StringField("Folio Number",
                                validators=[
                                     InputRequired(),
