@@ -42,7 +42,8 @@ $(document).ready(() => {
 		.done((response, status, jqXHR) => {
 		    if (jqXHR.status == 200) {
 		            $.each(response.content, (index, data) => {
-		                $(`#${data["name"]}`).val(data["value"]);
+		                $(`#${data["name"]}`).val(data["value"].toFixed(1));
+		                $(`#${data["name"]}`).attr('readonly', true);
 		            });
 		    }
 		    if (jqXHR.status == 204) {
@@ -71,5 +72,6 @@ clear_pollutants = () => {
     pollutants = ["AQI","PM25","PM10","CO","NO2","SO2","O3"]
     $.each(pollutants, (index, pollutant) => {
         $(`#${pollutant}`).val("");
+        $(`#${pollutant}`).attr('readonly', false);
     });
 }
