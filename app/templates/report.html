@@ -72,11 +72,11 @@
                               {% for pollutant in report.planning_application.pollutants %}
                                 {% if pollutant.pollutant_id == 'AQI' %}
                                     <div class="row justify-content-center">
-                                        <span class="col">{{pollutant.pollutant.name }}</span>
-                                        <span class="col" style="height: 2rem;">
+                                        <span class="col-3">{{pollutant.pollutant.name }}</span>
+                                        <span class="col-3" style="height: 2rem;">
                                           {{pollutant.pollutant_level | round}}
                                         </span>
-                                        <span class="col">{{ pollutant.status.description }}</span>
+                                        <span class="col-6">{{ pollutant.status.description }}</span>
                                     </div>
                                 {% endif %}
                               {% endfor %}
