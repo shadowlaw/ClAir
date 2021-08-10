@@ -1,3 +1,5 @@
+pollutants = ["AQI","PM25","PM10","CO","NO2","SO2","O3"]
+
 $(document).ready(() => {
     $("#parish").change(() => {
 		$.ajax({
@@ -67,7 +69,12 @@ $(document).ready(() => {
 	if ($('#aq-date-ff').val() && $('#aq-date-ff').val() !== ""){
 	    set_date_range($('#aq-date-ff').val())
 	}
-//	TODO: set populated pollutant fields to disabled after invalid form submission
+
+	$.each(pollutants, (index, pollutant) => {
+	    if ($(`#${pollutant}`).val()){
+            $(`#${pollutant}`).attr('readonly', true);
+	    }
+	});
 });
 
 reset_options = (element_id, field_name) => {
@@ -79,7 +86,6 @@ reset_options = (element_id, field_name) => {
 }
 
 clear_pollutants = () => {
-    pollutants = ["AQI","PM25","PM10","CO","NO2","SO2","O3"]
     $.each(pollutants, (index, pollutant) => {
         $(`#${pollutant}`).val("");
         $(`#${pollutant}`).attr('readonly', false);
