@@ -12,6 +12,9 @@
             <span class="col-2 h5">Date: {{current_date}}</span>
         </div>
         <hr class="mt-1"/>
+        <div id='aq-date-container' class="row justify-content-end d-none mr-2 font-weight-bold">
+          Air Quality Date Range:&nbsp;<span id="aq-date"></span>
+        </div>
         <form method="POST" action="{{ url_for('.new_application') }}" novalidate>
           <div class="row justify-content-around">
             {{ application_form.csrf_token }}

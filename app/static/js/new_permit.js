@@ -10,6 +10,7 @@ $(document).ready(() => {
 		    if (jqXHR.status == 200) {
 		            reset_options("town", "Town")
 		            clear_pollutants()
+		            clear_aq_date_field();
 		            $.each(response.content, (index, data) => {
 		                $("#town").append($("<option>", {
                             value: data["id"],
@@ -26,6 +27,7 @@ $(document).ready(() => {
 		    if (response.status == 404) {
 		            reset_options("town", "Town")
 		            clear_pollutants()
+		            clear_aq_date_field();
 		    } else{
 		        alert("Something Went Wrong")
 		    }
@@ -45,14 +47,18 @@ $(document).ready(() => {
 		                $(`#${data["name"]}`).val(data["value"].toFixed(1));
 		                $(`#${data["name"]}`).attr('readonly', true);
 		            });
+		            $("#aq-date").text(response.date_range);
+		            $("#aq-date-container").removeClass("d-none");
 		    }
 		    if (jqXHR.status == 204) {
 		            clear_pollutants()
+		            clear_aq_date_field();
 		    }
 		})
 		.fail((response, status) => {
 		    if (response.status == 404) {
 		            clear_pollutants()
+		            clear_aq_date_field()
 		    } else{
 		        alert("Something Went Wrong")
 		    }
@@ -74,4 +80,9 @@ clear_pollutants = () => {
         $(`#${pollutant}`).val("");
         $(`#${pollutant}`).attr('readonly', false);
     });
+}
+
+clear_aq_date_field = () => {
+    $("#aq-date").text('')
+    $("#aq-date-container").addClass("d-none")
 }
