@@ -28,32 +28,32 @@
                                 </span>
                               </div>
                               <div class="row justify-content-center">
-                                  <span class="col-4">Folio Number</span>
-                                  <span class="col-5 font-weight-bold">{{report.planning_application.folio_number}}</span>
+                                  <span class="col-5">Folio Number</span>
+                                  <span class="col-4 font-weight-bold">{{report.planning_application.folio_number}}</span>
                               </div>
                               <div class="row justify-content-center">
-                                  <span class="col-4">Area Name</span>
-                                  <span class="col-5 font-weight-bold">{{report.planning_application.area_name}}</span>
+                                  <span class="col-5">Area Name</span>
+                                  <span class="col-4 font-weight-bold">{{report.planning_application.area_name}}</span>
                               </div>
                               <div class="row justify-content-center">
-                                  <span class="col-4">Parish Name</span>
-                                  <span class="col-5 font-weight-bold">{{report.planning_application.town.parish.name}}</span>
+                                  <span class="col-5">Parish Name</span>
+                                  <span class="col-4 font-weight-bold">{{report.planning_application.town.parish.name}}</span>
                               </div>
                               <div class="row justify-content-center">
-                                  <span class="col-4">Town Name</span>
-                                  <span class="col-5 font-weight-bold">{{report.planning_application.town.name}}</span>
+                                  <span class="col-5">Town Name</span>
+                                  <span class="col-4 font-weight-bold">{{report.planning_application.town.name}}</span>
                               </div>
                               <div class="row justify-content-center">
-                                  <span class="col-4">Town Size</span>
-                                  <span class="col-5 font-weight-bold">{{ "{:,.1f}".format(report.planning_application.town.size)}} sq. ft.</span>
+                                  <span class="col-5">Town Size</span>
+                                  <span class="col-4 font-weight-bold">{{ "{:,.1f}".format(report.planning_application.town.size)}} sq. ft.</span>
                               </div>
                               <div class="row justify-content-center">
-                                  <span class="col-4">Area Size</span>
-                                  <span class="col-5 font-weight-bold">{{ "{:,.1f}".format(report.planning_application.square_footage)}} sq. ft.</span>
+                                  <span class="col-5">Avail. Planting Area (sq. ft.)</span>
+                                  <span class="col-4 font-weight-bold">{{ "{:,.1f}".format(report.planning_application.square_footage)}} sq. ft.</span>
                               </div>
                               <div class="row justify-content-center">
-                                  <span class="col-4">Targeted Area</span>
-                                  <span class="col-5 font-weight-bold">{{"{:,.1f}".format(((report.planning_application.square_footage/report.planning_application.town.size)*100))}}%</span>
+                                  <span class="col-5">Targeted Area</span>
+                                  <span class="col-4 font-weight-bold">{{"{:,.1f}".format(((report.planning_application.square_footage/report.planning_application.town.size)*100))}}%</span>
                               </div>
                           </div>
                       </div>
@@ -82,7 +82,7 @@
                               {% endfor %}
                               <div class="row">
                                   <span class="col-2 font-weight-bold">Pollutant</span>
-                                  <span class="col-3 font-weight-bold">Actual (&mu;g/m<sup>3</sup>)</span>
+                                  <span class="col-3 font-weight-bold">Actual [Avg] (&mu;g/m<sup>3</sup>)</span>
                                   <span class="col-3 font-weight-bold">Safe Level (&mu;g/m<sup>3</sup>)</span>
                                   <span class="col-4 font-weight-bold">Variance (&mu;g/m<sup>3</sup>)</span>
                               </div>

@@ -16,7 +16,7 @@ class PlanningApplicationForm(FlaskForm):
                                     Regexp(r'^[0-9]{3}$', message='Please enter a valid Folio Number. 001-999')
                                ])
     area_name = StringField("Area Name", validators=[InputRequired(), Regexp(r'^[^!@#$%^&*()+\-=\[\]{};\':"\\|,.<>\/?]*$')])
-    square_footage = DecimalField("Square Footage", validators=[InputRequired(), DataRequired(message=CONSTANTS["NUMBER_REQUIRED_VALIDATOR_MESSAGE"])])
+    square_footage = DecimalField("Avail. Planting Area (sq. ft.)", validators=[InputRequired(), DataRequired(message=CONSTANTS["NUMBER_REQUIRED_VALIDATOR_MESSAGE"])])
     AQI = DecimalField("AQI", validators=[InputRequired(), DataRequired(message=CONSTANTS["NUMBER_REQUIRED_VALIDATOR_MESSAGE"]),
                                           NumberRange(min=0, max=500, message="Please enter a number between 0 and 500")])
     PM25 = DecimalField(Markup("PM<sub>2.5</sub>"), id='PM25', validators=[InputRequired(), DataRequired(message=CONSTANTS["NUMBER_REQUIRED_VALIDATOR_MESSAGE"])])
