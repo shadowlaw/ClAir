@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify
 
 from app.blueprints.main.model.parish import Parish
 from app.blueprints.main.model.town import Town
+from app.blueprints.main.service.air_quality_service import calculate_weighted_aq
 
 main_api = Blueprint("main_api", __name__)
 
@@ -22,7 +23,7 @@ def get_town_pollutants(parish_id, town_id):
     response_object = {"parish_id": parish_id, "town_id": town_id, "content": []}
 
     if town:
-        response_object["content"] = [{"name": pollutant.pollutant_id, "value": float(pollutant.pollutant_level)} for pollutant in town.pollutants]
+        response_object["content"], response_object['date_range'] = calculate_weighted_aq(town_id)
         return jsonify(response_object), 200 if len(town.pollutants) != 0 else 204
     return jsonify(response_object), 404
 

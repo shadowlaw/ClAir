@@ -12,9 +12,13 @@
             <span class="col-2 h5">Date: {{current_date}}</span>
         </div>
         <hr class="mt-1"/>
+        <div id='aq-date-container' class="row justify-content-end d-none mr-2 font-weight-bold">
+          Air Quality Date Range:&nbsp;<span id="aq-date"></span>
+        </div>
         <form method="POST" action="{{ url_for('.new_application') }}" novalidate>
           <div class="row justify-content-around">
             {{ application_form.csrf_token }}
+            {{application_form.aq_date_range(class='d-none')}}
             <div class="col-5">
               <div class="row mt-2 mb-4" style="transform: skewX(-10deg); height: 4em;">
                 <span class="col-11 bg-success text-white h4 text-center">
@@ -56,7 +60,7 @@
                 <span class="col-12 bg-success text-white h4 text-center">
                   <span class="row h-100 align-items-center">
                     <span class="col-12">
-                      AIR QUALITY DETAILS
+                      AIR QUALITY DETAILS (Weighted Average)
                     </span>
                   </span>
                 </span>
