@@ -121,6 +121,7 @@
                               <th scope="col">Targeted Pollutant</th>
                               <th scope="col">Tree Efficacy</th>
                               <th scope="col">Secondary Pollutants (Efficacy)</th>
+                              <th scope="col">Available Space Used</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -143,6 +144,16 @@
                                         <span class="col">{{ sec_pol.pollutant.name.split()[0] }}<sub>{{ sec_pol.pollutant.name.split()[1] }}</sub> ({{ sec_pol.tree_efficacy.effectiveness | round }})</span>
                                     </div>
                                   {% endfor %}
+                              </td>
+                              <td class="align-middle">
+                                  <div class="row">
+                                      <span class="col-12">
+                                          {{ "{:,.1f}".format(report_detail.tree.space_required * report_detail.quantity) }} <span class="text-muted">Total sq. ft.</span>
+                                      </span>
+                                      <span class="col-12">
+                                          {{ "{:,.1f}".format(report_detail.tree.space_required) }} <span class="text-muted">sq. ft. per tree</span>
+                                      </span>
+                                  </div>
                               </td>
                             </tr>
                             {% endfor %}
