@@ -51,6 +51,9 @@ def get_recommendations(square_footage,pollutants):
 
     while square_footage_left > 0 or not allSafe():
 
+        if len(pollutants) <= 0:
+            break
+
         if square_footage_left <= 0:
             break
 
