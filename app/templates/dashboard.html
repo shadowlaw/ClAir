@@ -25,7 +25,7 @@
                 {% else %}
                     <div class="row card mb-3 bg-success text-white" >
                       <div class="card-body row justify-content-center ">
-                          <h4>Created Reports</h4>
+                          <h4>Generated Reports</h4>
                       </div>
                     </div>
                     {% for item in page.items %}
@@ -36,13 +36,14 @@
                                     <tr>
                                       <th scope="col">Report ID</th>
                                       <th scope="col">Area Name</th>
+                                      <th scope="col">Folio Number</th>
                                       <th scope="col">Requestor</th>
                                       <th scope="col">Report Created On</th>
                                     </tr>
                                   </thead>
                                   <tbody>
                                     <tr>
-                                      <td class="align-middle col-3">
+                                      <td class="align-middle col-2">
                                           <a class="text-success" href="{{ url_for('report_views.specific_report', report_id=item.id) }}">{{ item.id }}</a>
                                       </td>
                                       <td class="align-middle col-3">
@@ -50,8 +51,9 @@
                                             {{ item.planning_application.area_name }}
                                           </a>
                                       </td>
-                                      <td class="align-middle col-3 text-muted">{{ item.planning_application.user.username }}</sub></td>
-                                      <td class="align-middle col-3 text-muted">{{ item.created_on.strftime(config['DISPLAY_DATE_FORMAT']) }}</td>
+                                      <td class="align-middle col-2 text-muted">{{ item.planning_application.folio_number }}</sub></td>
+                                      <td class="align-middle col-2 text-muted">{{ item.planning_application.user.username }}</sub></td>
+                                      <td class="align-middle col-2 text-muted">{{ item.created_on.strftime(config['DISPLAY_DATE_FORMAT']) }}</td>
                                     </tr>
                                   </tbody>
                                 </table>
