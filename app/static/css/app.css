@@ -10,3 +10,7 @@
     max-width: 4rem;
     height: 4rem;
 }
+.borderless td, .borderless th, .borderless thead th {
+    border: none;
+}
+

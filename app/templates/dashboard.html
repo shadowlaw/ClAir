@@ -1,5 +1,67 @@
 {% extends 'base.html' %}
 {% block title %}Dashboard{% endblock title%}
 {% block content%}
-hi, i'm the dashboard
+    <div class="row justify-content-center">
+      <div class="content col-12">
+        <div class="row">
+            <div class="col-12">
+                <div class="row mb-3">
+                    <h2>Welcome Plant Saver</h2>
+                </div>
+                {% if (page.items | length) == 0 %}
+                    <h1 class="text-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="6rem" height="6rem" fill="#28a745" class="bi bi-journal-x" viewBox="0 0 16 16">
+                          <path fill-rule="evenodd" d="M6.146 6.146a.5.5 0 0 1 .708 0L8 7.293l1.146-1.147a.5.5 0 1 1 .708.708L8.707 8l1.147 1.146a.5.5 0 0 1-.708.708L8 8.707 6.854 9.854a.5.5 0 0 1-.708-.708L7.293 8 6.146 6.854a.5.5 0 0 1 0-.708z"/>
+                          <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/>
+                          <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"/>
+                        </svg>
+                    </h1>
+                    <h2 class="text-center text-muted">
+                        No reports generated for viewing
+                    </h2>
+                    <h4 class="text-center text-muted">
+                        Please create/view a planning application to generate a report
+                    </h4>
+                {% else %}
+                    <div class="row card mb-3 bg-success text-white" >
+                      <div class="card-body row justify-content-center ">
+                          <h4>Created Reports</h4>
+                      </div>
+                    </div>
+                    {% for item in page.items %}
+                        <div class="card mb-3">
+                          <div class="card-body p-0">
+                              <table class="table mb-0 borderless text-center">
+                                  <thead>
+                                    <tr>
+                                      <th scope="col">Report ID</th>
+                                      <th scope="col">Area Name</th>
+                                      <th scope="col">Requestor</th>
+                                      <th scope="col">Report Created On</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr>
+                                      <td class="align-middle col-3">
+                                          <a class="text-success" href="{{ url_for('report_views.specific_report', report_id=item.id) }}">{{ item.id }}</a>
+                                      </td>
+                                      <td class="align-middle col-3">
+                                          <a class="text-success" href="{{ url_for('planning_application_views.specific_application', application_id=item.planning_application.id) }}">
+                                            {{ item.planning_application.area_name }}
+                                          </a>
+                                      </td>
+                                      <td class="align-middle col-3 text-muted">{{ item.planning_application.user.username }}</sub></td>
+                                      <td class="align-middle col-3 text-muted">{{ item.created_on.strftime(config['DISPLAY_DATE_FORMAT']) }}</td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                          </div>
+                        </div>
+                    {% endfor%}
+                {% endif %}
+            </div>
+        </div>
+      </div>
+    </div>
+    {% include 'pagination.html' %}
 {% endblock content %}
