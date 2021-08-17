@@ -8,6 +8,7 @@ class Tree(db.Model):
     name = db.Column(db.String(255),  nullable=False)
     type_id = db.Column(db.String(100), db.ForeignKey('tree_type.id'))
     maturity_size = db.Column(db.Numeric(precision=2), nullable=False)
+    age_to_maturity = db.Column(db.Numeric(precision=2), nullable=True)
     space_required = db.Column(db.Numeric(precision=2), nullable=False)
     img_name = db.Column(db.String(100), default='default_tree.jpeg')
     type = db.relationship('TreeType', backref='trees', lazy=True)
