@@ -140,6 +140,7 @@
                                   <th scope="col">Tree Efficacy</th>
                                   <th scope="col">Secondary Pollutants (Efficacy)</th>
                                   <th scope="col">Available Space Used</th>
+                                  <th scope="col">Years to Max. Impact</th>
                                 </tr>
                               </thead>
                               <tbody>
@@ -173,6 +174,9 @@
                                           </span>
                                       </div>
                                   </td>
+                                  <td class="align-middle">
+                                    {{ "{:,.0f}".format(report_detail.tree.age_to_maturity) }}
+                                </td>
                                 </tr>
                                 {% endfor %}
                               </tbody>
