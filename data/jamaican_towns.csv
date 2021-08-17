@@ -1,6 +1,10 @@
 Parish,Town,coordinates,sq. ft.
-Kingston,Kingston,17.9833°N 76.8000°W,3000
-Saint Catherine,Portmore,17.9499°N 76.8799°W,3000
+Kingston,Kingston,17.9833°N 76.8000°W,244340000
+Kingston,New Kingston,,67810000
+Saint Andrew,Half Way Tree,,42087000
+Kingston,Cross Roads,,15823000
+Kingston,Downtown,,131104000
+Saint Catherine,Portmore,17.9499°N 76.8799°W,296653000
 Saint James,Montego Bay,18.4666°N 77.9166°W,3000
 Saint Catherine,Spanish Town,17.9958°N 76.9551°W,3000
 Clarendon,May Pen,17.97°N 77.24°W,3000
@@ -38,7 +42,7 @@ Manchester,Christiana,18.17°N 77.49°W,3000
 Saint Ann,Claremont,18.38°N 77.17°W,3000
 Trelawny,Clark's Town,18.42°N 77.57°W,3000
 Manchester,Coleyville,18.22°N 77.50°W,3000
-Saint Andrew,Constant Spring,18.05°N 76.78°W,3000
+Saint Andrew,Constant Spring,18.05°N 76.78°W,45531000
 Clarendon,Croft's Hill,18.13°N 77.22°W,3000
 Saint Thomas,Dalvey,17.90°N 76.25°W,3000
 Westmoreland,Darliston,18.23°N 77.97°W,3000
