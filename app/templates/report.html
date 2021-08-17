@@ -111,55 +111,74 @@
                           </div>
                       </div>
                   </div>
-                  <div class="col-lg-8 scrollable">
-                      <table class="table borderless text-center">
-                          <thead>
-                            <tr>
-                              <th scope="col"></th>
-                              <th scope="col">No. of Trees</th>
-                              <th scope="col">Name</th>
-                              <th scope="col">Targeted Pollutant</th>
-                              <th scope="col">Tree Efficacy</th>
-                              <th scope="col">Secondary Pollutants (Efficacy)</th>
-                              <th scope="col">Available Space Used</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {% for report_detail in report.report_details %}
-                            <tr>
-                              <th scope="row">
-                                  {% if report_detail.tree.img_name is none %}
-                                    <img src="{{ url_for('static', filename='images/trees/default_tree.jpeg') }}" style="width: 8em; height: 8em;"/>
-                                  {% else %}
-                                      <img src="{{ url_for('static', filename='images/trees/'+report_detail.tree.img_name) }}" style="width: 8em; height: 8em;"/>
-                                  {% endif %}
-                              </th>
-                              <td class="align-middle">{{ report_detail.quantity }}</td>
-                              <td class="align-middle">{{ report_detail.tree.name }}</td>
-                              <td class="align-middle">{{report_detail.pollutant.name.split()[0] }}<sub>{{report_detail.pollutant.name.split()[1]}}</sub></td>
-                              <td class="align-middle">{{ report_detail.targeted_pollutant_tree_efficacy.effectiveness | round }}</td>
-                              <td class="align-middle">
-                                  {% for sec_pol in report_detail.secondary_pollutants[:2] | sort(attribute='tree_efficacy.effectiveness', reverse=True) %}
-                                    <div class="row">
-                                        <span class="col">{{ sec_pol.pollutant.name.split()[0] }}<sub>{{ sec_pol.pollutant.name.split()[1] }}</sub> ({{ sec_pol.tree_efficacy.effectiveness | round }})</span>
-                                    </div>
-                                  {% endfor %}
-                              </td>
-                              <td class="align-middle">
-                                  <div class="row">
-                                      <span class="col-12">
-                                          {{ "{:,.1f}".format(report_detail.tree.space_required * report_detail.quantity) }} <span class="text-muted">Total sq. ft.</span>
-                                      </span>
-                                      <span class="col-12">
-                                          {{ "{:,.1f}".format(report_detail.tree.space_required) }} <span class="text-muted">sq. ft. per tree</span>
-                                      </span>
-                                  </div>
-                              </td>
-                            </tr>
-                            {% endfor %}
-                          </tbody>
-                        </table>
-                  </div>
+                  {% if report.report_details | length == 0 %}
+                    <div class="col-lg-8">
+                        <h1 class="text-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="6rem" height="6rem" fill="#28a745" class="bi bi-journal-x" viewBox="0 0 16 16">
+                              <path fill-rule="evenodd" d="M6.146 6.146a.5.5 0 0 1 .708 0L8 7.293l1.146-1.147a.5.5 0 1 1 .708.708L8.707 8l1.147 1.146a.5.5 0 0 1-.708.708L8 8.707 6.854 9.854a.5.5 0 0 1-.708-.708L7.293 8 6.146 6.854a.5.5 0 0 1 0-.708z"/>
+                              <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/>
+                              <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"/>
+                            </svg>
+                        </h1>
+                        <h2 class="text-center text-muted">
+                            No recommendation to be made - all pollutants within safe limit
+                        </h2>
+                        <h4 class="text-center text-muted">
+                            Once a planning application has pollutants over the safe limit, its report will be generated
+                            with tree recommendations.
+                        </h4>
+                    </div>
+                  {% else %}
+                        <div class="col-lg-8 scrollable">
+                          <table class="table borderless text-center">
+                              <thead>
+                                <tr>
+                                  <th scope="col"></th>
+                                  <th scope="col">No. of Trees</th>
+                                  <th scope="col">Name</th>
+                                  <th scope="col">Targeted Pollutant</th>
+                                  <th scope="col">Tree Efficacy</th>
+                                  <th scope="col">Secondary Pollutants (Efficacy)</th>
+                                  <th scope="col">Available Space Used</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {% for report_detail in report.report_details %}
+                                <tr>
+                                  <th scope="row">
+                                      {% if report_detail.tree.img_name is none %}
+                                        <img src="{{ url_for('static', filename='images/trees/default_tree.jpeg') }}" style="width: 8em; height: 8em;"/>
+                                      {% else %}
+                                          <img src="{{ url_for('static', filename='images/trees/'+report_detail.tree.img_name) }}" style="width: 8em; height: 8em;"/>
+                                      {% endif %}
+                                  </th>
+                                  <td class="align-middle">{{ report_detail.quantity }}</td>
+                                  <td class="align-middle">{{ report_detail.tree.name }}</td>
+                                  <td class="align-middle">{{report_detail.pollutant.name.split()[0] }}<sub>{{report_detail.pollutant.name.split()[1]}}</sub></td>
+                                  <td class="align-middle">{{ report_detail.targeted_pollutant_tree_efficacy.effectiveness | round }}</td>
+                                  <td class="align-middle">
+                                      {% for sec_pol in report_detail.secondary_pollutants[:2] | sort(attribute='tree_efficacy.effectiveness', reverse=True) %}
+                                        <div class="row">
+                                            <span class="col">{{ sec_pol.pollutant.name.split()[0] }}<sub>{{ sec_pol.pollutant.name.split()[1] }}</sub> ({{ sec_pol.tree_efficacy.effectiveness | round }})</span>
+                                        </div>
+                                      {% endfor %}
+                                  </td>
+                                  <td class="align-middle">
+                                      <div class="row">
+                                          <span class="col-12">
+                                              {{ "{:,.1f}".format(report_detail.tree.space_required * report_detail.quantity) }} <span class="text-muted">Total sq. ft.</span>
+                                          </span>
+                                          <span class="col-12">
+                                              {{ "{:,.1f}".format(report_detail.tree.space_required) }} <span class="text-muted">sq. ft. per tree</span>
+                                          </span>
+                                      </div>
+                                  </td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                      </div>
+                  {% endif %}
               </div>
           </div>
         </div>

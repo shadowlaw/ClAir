@@ -6,13 +6,17 @@ from app import login_manager
 from flask_login import login_user, logout_user, login_required, current_user
 from werkzeug.security import check_password_hash
 
+from app.blueprints.report.model.report import Report
+
 main = Blueprint("main", __name__)
 
 
 @main.route("/")
 @login_required
 def home():
-    return render_template("dashboard.html")
+    page = int(request.args.get('page')) if request.args.get('page') is not None else 1
+    reports = Report.get_reports(page)
+    return render_template("dashboard.html", page=reports)
 
 @main.route("/login", methods = ['GET', 'POST'])
 def login():
