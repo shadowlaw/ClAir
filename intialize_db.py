@@ -102,7 +102,7 @@ def populate_trees():
             db.session.add(
                 Tree(id=tree_id, name=string.capwords(row['Common Name']), maturity_size=row['Max height of tree (feet)'],
                      space_required=row['Crown Diameter (feet)'], type_id=type_id,
-                     img_name=img_name)
+                     img_name=img_name, age_to_maturity=row['Age to Maturity'])
             )
 
             for key in row.keys():
