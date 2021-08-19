@@ -24,7 +24,7 @@ def upgrade():
         batch_op.create_foreign_key(batch_op.f('fk_targeted_pollutant_report_id_report'), 'report', ['report_id'], ['id'])
 
     with op.batch_alter_table('tree', schema=None) as batch_op:
-        batch_op.add_column(sa.Column('age_to_maturity', sa.Numeric(precision=2), nullable=True))
+        batch_op.add_column(sa.Column('age_to_maturity', sa.Numeric(), nullable=True))
 
     # ### end Alembic commands ###
 
