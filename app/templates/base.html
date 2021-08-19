@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='/images/logo-colour.png') }}" type="image/x-icon">
+    {% block links %}{% endblock links %}
+    <title>ClAir - {% block title%}{% endblock title%}</title>
+</head>
+<body>
+    {% include 'navbar.html' %}
+    <div class="container-sm h-100">
+        {% include '__flash_messages.html' %}
+        {% block content %}{% endblock content%}
+    </div>
+    {% include 'footer.html'%}
+<script src="{{ url_for('static', filename='js/jquery-3.6.0.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/popper.min.js') }}" ></script>
+<script src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js') }}"></script>
+{% block scripts %}{% endblock scripts %}
+</body>
+</html>

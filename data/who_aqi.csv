@@ -1,0 +1,8 @@
+id,name,safe_level
+NO2,NO 2,200
+SO2,SO 2,20
+O3,O 3,100
+PM25,PM 2.5,25
+PM10,PM 10,50
+CO,CO,10000
+AQI,AQI,50

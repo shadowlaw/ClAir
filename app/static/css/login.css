@@ -1,0 +1,53 @@
+*{
+    padding-top: 5px; 
+    margin: 0;
+    box-sizing: border-box;
+}
+
+
+body{
+    padding: 0;
+    margin: 0;
+    background: (rgb 219, 226, 226);
+}
+
+.row{
+    background: white;
+    border-radius: 30px;
+}
+
+
+.img{
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+    width: 50px;
+}
+
+.btn1{
+    border: none;
+    outline: none;
+    height: 50px;
+    width:100%;
+    background-color: rgb(112, 173, 71);
+    color: white;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+
+.btn1:hover{
+    background: white;
+    border: 1px solid;
+    color: black; 
+}
+
+
+.avatar{
+    width: 50px; 
+    height: 50px;
+}
+
+.logo {
+    width: 150px;
+    height: 150px;
+}

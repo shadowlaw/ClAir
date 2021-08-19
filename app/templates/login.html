@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en" style="margin: 0; padding: 0;">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
+    
+    <link rel = "stylesheet" href = "{{ url_for('static', filename = 'css/login.css')}}" type = "text/css"/>
+    <link rel="icon" href="{{ url_for('static', filename='/images/logo-colour.png') }}" type="image/x-icon">
+
+
+    <title>ClAir Login</title>
+  </head>
+  <body>
+        <div class = "container-sm" style="padding: 0;">
+            <div class="row" style="width: 100% !important; height: 100vh !important; padding-top: 0; padding-bottom: 0; margin: 0 !important;">
+                <div class="col-lg-4">
+                    <div class="row h-100 align-items-center">
+                        <div  class="col-12">
+                            <div class="row justify-content-center">
+                              <img src= "{{ url_for('static', filename='/images/logo-colour-cropped.svg') }}" class = "logo">
+                            </div>
+                            <div class="row justify-content-center align-items-center">
+                                <h4 class = "font-weight-bold py-3">Welcome Back to ClAir</h4>
+                                <div class="w-100"></div>
+                                <p>Your Pathway to Clean Air</p>
+                                <div class="w-100"></div>
+                                {% include '__flash_messages.html' %}
+                            </div>
+                            <div class="row justify-content-center">
+                                <form class="col-7" method = "POST" action = "{{url_for('main.login')}}" novalidate>
+                                    {{ form.csrf_token }}
+                                    <div class="form-group">
+                                        {% if form.username.errors %}
+                                            {{ form.username(placeholder="Your Username", class = "form-control is-invalid my-3")}}
+                                            <div class="row invalid-feedback">
+                                              {% for error in form.username.errors %}
+                                                  <span class="col">{{ error }} </span>
+                                              {% endfor %}
+                                            </div>
+                                          {% else %}
+                                            {{ form.username(placeholder="Your Username", class = "form-control my-3")}}
+                                          {% endif %}
+                                    </div>
+                                    <div class = "form-group">
+                                        {% if form.password.errors %}
+                                        {{ form.password(placeholder="Your Password", class = "form-control is-invalid my-3")}}
+                                        <div class="row invalid-feedback">
+                                          {% for error in form.password.errors %}
+                                              <span class="col">{{ error }} </span>
+                                          {% endfor %}
+                                        </div>
+                                        {% else %}
+                                          {{ form.password(placeholder="Your Password", class = "form-control my-3")}}
+                                        {% endif %}
+                                    </div>
+                                        <div>
+                                            {{ form.submit(class = "btn btn-success col-12")}}
+                                        </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8" style=" padding: 0;">
+                    <img src= "{{ url_for('static', filename = 'images/Park.png')}}" class = "img-fluid float-end" style="padding-top: 3.8rem;">
+                </div>
+            </div>
+        </div>
+      <script src="{{ url_for('static', filename='js/jquery-3.6.0.min.js') }}"></script>
+      <script src="{{ url_for('static', filename='js/popper.min.js') }}" ></script>
+      <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js') }}"></script>
+  </body>
+</html>
