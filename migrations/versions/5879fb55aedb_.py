@@ -51,7 +51,7 @@ def upgrade():
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('planning_application_area_pollutant',
-    sa.Column('application_id', sa.String(length=100), nullable=False),
+    sa.Column('application_id', sa.Integer(), nullable=False),
     sa.Column('pollutant_id', sa.String(length=100), nullable=False),
     sa.Column('pollutant_level', sa.Numeric(precision=2), nullable=False),
     sa.ForeignKeyConstraint(['application_id'], ['planning_application.id'], ),
