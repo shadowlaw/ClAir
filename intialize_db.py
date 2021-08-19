@@ -105,6 +105,8 @@ def populate_trees():
                      img_name=img_name, age_to_maturity=row['Age to Maturity'])
             )
 
+            db.session.commit()
+
             for key in row.keys():
                 if key in pollutants.keys():
                     if key == 'Particulate Matter':
@@ -118,8 +120,7 @@ def populate_trees():
                         db.session.add(
                             TreeEfficacy(tree_id=tree_id, pollutant_id=pollutants[key], effectiveness=row[key])
                         )
-
-            db.session.commit()
+                    db.session.commit()
         print('Done')
 
 
@@ -155,8 +156,8 @@ def populate_pollutants():
 if __name__ == "__main__":
     load_parish_town_data()
     add_default_user()
+    populate_pollutants()
     populate_trees()
     populate_pollutant_limit_statuses()
-    populate_pollutants()
     print('DEFAULT USERNAME: default\nDEFAULT PASSWORD: danger')
     print('ADMIN USERNAME: admin\nDEFAULT PASSWORD: danger')
