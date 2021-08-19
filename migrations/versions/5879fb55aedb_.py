@@ -34,7 +34,7 @@ def upgrade():
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('town',
-    sa.Column('id', sa.String(length=100), nullable=False),
+    sa.Column('id', sa.String(length=100), nullable=False, unique=True),
     sa.Column('parish_id', sa.String(length=100), nullable=False),
     sa.Column('name', sa.String(length=255), nullable=False),
     sa.ForeignKeyConstraint(['parish_id'], ['parish.id'], ),
