@@ -26,7 +26,7 @@ def upgrade():
     op.create_table('pollutant',
     sa.Column('id', sa.String(length=100), nullable=False),
     sa.Column('name', sa.String(length=255), nullable=False),
-    sa.Column('safe_level', sa.Numeric(precision=2), nullable=False),
+    sa.Column('safe_level', sa.Numeric(), nullable=False),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('user',
@@ -53,7 +53,7 @@ def upgrade():
     op.create_table('planning_application_area_pollutant',
     sa.Column('application_id', sa.Integer(), nullable=False),
     sa.Column('pollutant_id', sa.String(length=100), nullable=False),
-    sa.Column('pollutant_level', sa.Numeric(precision=2), nullable=False),
+    sa.Column('pollutant_level', sa.Numeric(), nullable=False),
     sa.ForeignKeyConstraint(['application_id'], ['planning_application.id'], ),
     sa.ForeignKeyConstraint(['pollutant_id'], ['pollutant.id'], ),
     sa.PrimaryKeyConstraint('application_id', 'pollutant_id')
