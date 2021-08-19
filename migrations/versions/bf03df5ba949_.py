@@ -21,14 +21,14 @@ def upgrade():
     op.create_table('tree',
     sa.Column('id', sa.String(length=100), nullable=False),
     sa.Column('name', sa.String(length=255), nullable=False),
-    sa.Column('maturity_size', sa.Numeric(precision=2), nullable=False),
-    sa.Column('space_required', sa.Numeric(precision=2), nullable=False),
+    sa.Column('maturity_size', sa.Numeric(), nullable=False),
+    sa.Column('space_required', sa.Numeric(), nullable=False),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('tree_efficacy',
     sa.Column('tree_id', sa.String(length=100), nullable=False),
     sa.Column('pollutant_id', sa.String(length=100), nullable=False),
-    sa.Column('effectiveness', sa.Numeric(precision=2), nullable=False),
+    sa.Column('effectiveness', sa.Numeric(), nullable=False),
     sa.ForeignKeyConstraint(['pollutant_id'], ['pollutant.id'], ),
     sa.ForeignKeyConstraint(['tree_id'], ['tree.id'], ),
     sa.PrimaryKeyConstraint('tree_id', 'pollutant_id')
